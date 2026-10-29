@@ -1,0 +1,13 @@
+﻿# secrets / state - never commit
+*.tfstate
+*.tfstate.*
+.terraform/
+*.tfvars
+attack_range.yml
+attack_range/configs/attack_range.yml
+*.pem
+*.key
+id_rsa*
+.env
+apps/*.tgz
+apps/*.spl

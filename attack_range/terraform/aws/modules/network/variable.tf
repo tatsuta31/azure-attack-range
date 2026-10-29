@@ -1,0 +1,3 @@
+
+variable "general" { }
+variable "aws" { }

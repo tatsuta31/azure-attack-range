@@ -1,0 +1,2 @@
+variable "general" { }
+variable "azure" { }

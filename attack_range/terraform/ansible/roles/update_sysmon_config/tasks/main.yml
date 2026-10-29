@@ -1,0 +1,4 @@
+---
+
+- include_tasks: windows-sysmon.yml
+  when: windows_servers.win_sysmon_config != "SwiftOnSecurity.xml"
