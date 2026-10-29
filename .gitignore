@@ -11,3 +11,4 @@ id_rsa*
 .env
 apps/*.tgz
 apps/*.spl
+*.pub

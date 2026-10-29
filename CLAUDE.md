@@ -17,6 +17,14 @@ Azure 上に検知検証ラボを作る。Atomic Red Team / Caldera で攻撃 �
 - Caldera の Ansible ロールは `/home/admin/caldera` 固定。**Azure は管理者ユーザー名 `admin` を禁止**しているのでパス修正が必要
 - Azure では Kali モジュールがコメントアウト（Marketplace から消えた）
 - 既定の Splunk は 9.3.0。BYO にするので range 側では使わない
+- **本家 Dockerfile は `git clone` で既定ブランチ（v5）を取る**ので v4.0.2 のパッチが乗らない → 自前の `docker/Dockerfile`（ツールのみ、ソースは bind mount）
+- `configure` は SSH 鍵を CWD に作る。Windows の bind mount 上は 0777 に見えて ssh が拒否する → 鍵は名前付きボリューム `aar-ssh`（`/root/.ssh/aar.key`）に置き、configure では既存鍵を再利用
+- azure-cli は専用 venv（`/opt/azcli`）。本家は requirements.txt と同居させており azure-* のピン留めと衝突し得る
+
+## ローカル実行環境
+
+- `.\ar.ps1` でツールボックスコンテナに入る（`-Build` で再ビルド）。ボリューム：`aar-azure`（az login）、`aar-ssh`（鍵）
+- PowerShell 5.1 からコンテナの stdin にパイプすると先頭に BOM が付いて1行目が壊れる。コマンドは引数で渡す
 
 ## パッチ方針
 
