@@ -1,0 +1,36 @@
+# azure-attack-range: Azure + BYO Splunk (core/) + Caldera の設定見本
+# 使い方: このファイルを attack_range.yml にコピーして値を埋める（attack_range.yml は .gitignore 済み）
+#   Copy-Item attack_range\attack_range.azure.example.yml attack_range\attack_range.yml
+# 書いていないキーは configs/attack_range_default.yml の値が使われる。
+
+general:
+  cloud_provider: "azure"
+  attack_range_password: "CHANGE-ME"   # 全 VM 共通のパスワード。既定値のままだと validate で止まる
+  key_name: "aar"
+  attack_range_name: "ar"
+  ip_whitelist: "203.0.113.10/32"      # 自宅のグローバル IP（core の allowed_source_cidrs と同じ）
+
+azure:
+  location: "japaneast"
+  subscription_id: "00000000-0000-0000-0000-000000000000"
+  private_key_path: "/root/.ssh/aar.key"   # ツールボックスのボリューム aar-ssh
+  public_key_path: "/root/.ssh/aar.pub"
+  core_vnet_id: ""                         # core/ で terraform output -raw core_vnet_id の値
+
+splunk_server:
+  byo_splunk: "1"
+  byo_splunk_ip: "10.10.1.10"              # core/ で terraform output -raw splunk_private_ip の値
+
+caldera_server:
+  caldera_server: "1"
+  # azure_vm_size: "Standard_D2s_v5"       # 既定。ビルドが重ければ Standard_D4s_v5 に
+
+windows_servers:
+  - hostname: ar-win
+    windows_image: "windows-server-2022"
+    install_caldera_agent: "1"
+
+# Linux も検証するときはコメントを外す（vCPU クォータに注意）
+# linux_servers:
+#   - hostname: ar-linux
+#     install_caldera_agent: "1"

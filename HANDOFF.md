@@ -41,11 +41,13 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\ar.ps1 az login --use-devi
 3. **`core/` の Terraform**：**コードは完成（2026-10-31）**。`terraform validate` 通過、cloud-init スクリプトのレンダリングと `bash -n` も確認済み、既定の TA 8 本が S3 に存在することも確認済み。**未コミット**。実行はユーザー（手順は `core/README.md`）
    - ユーザーが tfvars に埋める値：サブスク ID、自宅 IP、Splunk 10.6.1 の .tgz の URL と SHA512（公式ページから）、admin パスワード、モデル名とバージョン（Japan East で使えるもの）
    - 未検証（apply して初めて分かる）：ロール名 `Azure AI User` の割り当て、Splunk 10.6.1 が Ubuntu 24.04 で cloud-init から正常に起動するか、モデル名とバージョン
-4. **Attack Range v4.0.2 へのパッチ**（パッチ単位でコミット）
-   - BYO Splunk：`splunk_server.byo_splunk: "1"`, `byo_splunk_ip: <core の Splunk IP>`
-   - `terraform/azure/modules/network` に **双方向 VNet ピアリング**を追加（core の VNet ID を設定から受け取る。range destroy で両側消える）
-   - **Caldera サーバーの Azure モジュール新設**（AWS 版 `terraform/aws/modules/caldera-server` を移植、IP `10.0.1.70`）。Ansible ロールの `/home/admin` 固定パスを修正（Azure は `admin` ユーザー名禁止）
-   - `configure` は「既存鍵を再利用」で `/root/.ssh/aar.key` を指定
+4. **Attack Range v4.0.2 へのパッチ**：**完了（2026-11-01、4 コミット＋設定見本）**。`terraform validate` 通過、設定見本は本家の ConfigHandler で読めることを確認済み
+   - `23b27e5` Azure の Windows/Linux の Ansible 変数に `caldera_server` が無かった本家バグを修正（＋パスワードの JSON エスケープ）
+   - `0901e8f` `azure.core_vnet_id` を設定すると双方向ピアリング。両方向とも range の state が持つので、range destroy で消える
+   - `ccc0cf2` Caldera ロールの `/home/admin` 固定を `caldera_user` / `caldera_home` に。Windows エージェントの schtasks を `ansible_user`（Azure は AzureAdmin）で実行
+   - `1568d1d` Azure 用の Caldera モジュール（Debian 12、ユーザー `caldera`、10.0.1.70）。Windows/Linux は Caldera の完了を待つ
+   - 設定見本：`attack_range/attack_range.azure.example.yml` → `attack_range.yml` にコピーして使う。`attack_range.py configure` は使わなくてよい
+   - 未検証（build して初めて分かる）：Debian 12 の Azure イメージ（`Debian/debian-12/12`）上で caldera_server ロールが通るか、UF 9.3.0 → Splunk 10.6.1 への転送
 5. **疎通確認**：ar-win で ART（例 `T1003.001`）→ core Splunk で検索できること。Caldera エージェントのチェックイン
 6. **Splunk MCP Server app**（Splunkbase 7931。DL はユーザーが Splunk.com ログインで実施）→ まず Claude Code から MCP 接続
 7. **Foundry 側エージェント**：モデル＝Foundry、MCP クライアント＝core VNet 内の自作エージェント（Foundry SDK）。AI-901 の SDK 範囲も兼ねる
