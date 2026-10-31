@@ -153,3 +153,32 @@ resource "azurerm_subnet_network_security_group_association" "attackrange-nsga" 
   subnet_id                 = azurerm_subnet.attackrange-subnet.id
   network_security_group_id = azurerm_network_security_group.attackrange-nsg.id
 }
+
+# --- azure-attack-range patch: VNet peering to the persistent core VNet (BYO Splunk) ---
+# Enabled when azure.core_vnet_id is set (output core_vnet_id of core/ Terraform).
+# Both directions are owned by this state, so range destroy removes both sides
+# and the core VNet is left untouched.
+
+locals {
+  core_vnet_id    = lookup(var.azure, "core_vnet_id", "")
+  core_peering    = local.core_vnet_id != ""
+  core_vnet_parts = split("/", local.core_vnet_id)
+}
+
+resource "azurerm_virtual_network_peering" "range-to-core" {
+  count                     = local.core_peering ? 1 : 0
+  name                      = "ar-peer-to-core-${var.general.key_name}-${var.general.attack_range_name}"
+  resource_group_name       = azurerm_resource_group.attackrange.name
+  virtual_network_name      = azurerm_virtual_network.attackrange-network.name
+  remote_virtual_network_id = local.core_vnet_id
+  allow_virtual_network_access = true
+}
+
+resource "azurerm_virtual_network_peering" "core-to-range" {
+  count                     = local.core_peering ? 1 : 0
+  name                      = "ar-peer-from-${var.general.key_name}-${var.general.attack_range_name}"
+  resource_group_name       = local.core_vnet_parts[4]
+  virtual_network_name      = local.core_vnet_parts[8]
+  remote_virtual_network_id = azurerm_virtual_network.attackrange-network.id
+  allow_virtual_network_access = true
+}

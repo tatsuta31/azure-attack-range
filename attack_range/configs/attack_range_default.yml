@@ -93,6 +93,10 @@ azure:
   event_hub_host_name: "xxx"
 # All these fields are needed to configure the Azure logs. See the chapter Azure Logs in the docs page Attack Range Cloud.
 
+  core_vnet_id: ""
+  # azure-attack-range patch: resource ID of the persistent core VNet (terraform output core_vnet_id in core/).
+  # When set, the range VNet is peered with it both ways so UFs can reach the BYO Splunk.
+
 gcp:
   region: "europe-west3"
   # Region used in GCP. This should be the same as the region configured in GCP CLI.
