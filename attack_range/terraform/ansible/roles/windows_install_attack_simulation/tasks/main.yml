@@ -24,13 +24,22 @@
   when: simulation.cap_attack == "1"
 
 - name: Install Atomic Red Team
+  # azure-attack-range patch: stop on the first error and verify the module exists.
+  # Without this, a failed Install-AtomicRedTeam was reported as success (only atomics/
+  # got installed) and the first simulate failed with "Invoke-AtomicTest is not recognized".
   win_shell: |
+    $ErrorActionPreference = "Stop"
+    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
     Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Internet Explorer\Main" -Name "DisableFirstRunCustomize" -Value 2
-    IEX (IWR https://raw.githubusercontent.com/redcanaryco/invoke-atomicredteam/master/install-atomicredteam.ps1)
+    IEX (IWR https://raw.githubusercontent.com/redcanaryco/invoke-atomicredteam/master/install-atomicredteam.ps1 -UseBasicParsing)
     Install-AtomicRedTeam -Force
     IEX (IWR 'https://raw.githubusercontent.com/redcanaryco/invoke-atomicredteam/master/install-atomicsfolder.ps1' -UseBasicParsing)
     Install-AtomicsFolder -Force -RepoOwner "{{ simulation.atomic_red_team_repo }}" -Branch "{{ simulation.atomic_red_team_branch }}"
+    if (-not (Test-Path "C:\AtomicRedTeam\invoke-atomicredteam\Invoke-AtomicRedTeam.psd1")) { throw "Invoke-AtomicRedTeam module is missing after install" }
   register: install_art
+  retries: 2
+  delay: 30
+  until: install_art is succeeded
 
 - name: copy default powershell profile
   win_template:
