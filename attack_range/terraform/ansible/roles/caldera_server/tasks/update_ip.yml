@@ -1,7 +1,7 @@
 ---
 - name: Update URL [Caldera]
   ansible.builtin.lineinfile:
-    path: /home/admin/caldera/conf/default.yml
+    path: "{{ caldera_home }}/caldera/conf/default.yml"
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"
   loop:

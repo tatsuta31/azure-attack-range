@@ -1,7 +1,7 @@
 ---
 - name: Clone from GitHub [Caldera]
   ansible.builtin.shell: |
-    cd ~/
+    cd {{ caldera_home }}
     git clone https://github.com/mitre/caldera.git --recursive {{ caldera_server.caldera_version }}
 
 - name: Update URL [Caldera]
@@ -9,13 +9,13 @@
 
 - name: Update Password [Caldera]
   ansible.builtin.replace:
-    path: /home/admin/caldera/conf/default.yml
+    path: "{{ caldera_home }}/caldera/conf/default.yml"
     regexp: 'admin$'
     replace: "{{ general.attack_range_password }}"
 
 - name: Update Agents [Caldera]
   ansible.builtin.lineinfile:
-    path: /home/admin/caldera/conf/agents.yml
+    path: "{{ caldera_home }}/caldera/conf/agents.yml"
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"
   loop:
@@ -24,19 +24,19 @@
 
 - name: Setup Server [Caldera]
   ansible.builtin.shell: |
-    cd ~/caldera
+    cd {{ caldera_home }}/caldera
     reqs='/usr/local/go/bin:/usr/local/bin:/usr/bin:/bin'
     upx=$(find /usr/local/upx-* -type d)
-    nvm=$(find /home/admin/.nvm/versions/node/*/bin -type d)
+    nvm=$(find {{ caldera_home }}/.nvm/versions/node/*/bin -type d)
     echo "PATH=$reqs:$upx:$nvm" > caldera.env
     pipenv install
     pipenv run pip install -r requirements.txt
 
 - name: Create Systemd service [Caldera]
   become: true
-  ansible.builtin.copy:
-    src: caldera.service
-    dest: /etc/systemd/system/
+  ansible.builtin.template:
+    src: caldera.service.j2
+    dest: /etc/systemd/system/caldera.service
     owner: root
     group: root
     mode: '0644'

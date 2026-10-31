@@ -4,11 +4,11 @@ After=network.target
 
 [Service]
 Type=simple
-User=admin
-Group=admin
+User={{ caldera_user }}
+Group={{ caldera_user }}
 KillSignal=SIGINT #workaround (works with this parameter)
-EnvironmentFile=/home/admin/caldera/caldera.env
-WorkingDirectory=/home/admin/caldera
+EnvironmentFile={{ caldera_home }}/caldera/caldera.env
+WorkingDirectory={{ caldera_home }}/caldera
 ExecStart=pipenv run python server.py --insecure --build
 
 [Install]

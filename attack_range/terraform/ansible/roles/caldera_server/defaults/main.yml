@@ -1,0 +1,5 @@
+---
+# azure-attack-range patch: the role used to hardcode /home/admin (the Debian AMI user on AWS).
+# Azure forbids "admin" as an admin username, so the Azure module overrides caldera_user.
+caldera_user: admin
+caldera_home: "/home/{{ caldera_user }}"

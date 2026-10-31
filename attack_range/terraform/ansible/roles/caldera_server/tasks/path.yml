@@ -1,7 +1,7 @@
 ---
 - name: Update Path [Caldera]
   ansible.builtin.blockinfile:
-    path: "/home/admin/.bashrc"
+    path: "{{ caldera_home }}/.bashrc"
     insertafter: EOF
     append_newline: true
     prepend_newline: true

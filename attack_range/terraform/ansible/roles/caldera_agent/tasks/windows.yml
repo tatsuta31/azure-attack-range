@@ -26,7 +26,7 @@
         arguments: -server http://{{ caldera_server.private_ip }}:8888 -group red
     triggers:
       - type: boot
-    username: "Administrator"
+    username: "{{ ansible_user }}"  # azure-attack-range patch: Azure has AzureAdmin, not Administrator
     password: "{{ general.attack_range_password }}"
     run_level: highest
     hidden: true
