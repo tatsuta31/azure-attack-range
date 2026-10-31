@@ -50,6 +50,8 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\ar.ps1 az login --use-devi
    - `1568d1d` Azure 用の Caldera モジュール（Debian 12、ユーザー `caldera`、10.0.1.70）。Windows/Linux は Caldera の完了を待つ
    - 設定見本：`attack_range/attack_range.azure.example.yml` → `attack_range.yml` にコピーして使う。`attack_range.py configure` は使わなくてよい
    - 未検証（build して初めて分かる）：Debian 12 の Azure イメージ（`Debian/debian-12/12`）上で caldera_server ロールが通るか、UF 9.3.0 → Splunk 10.6.1 への転送
+   - **build 成功（2026-11-01 06:31 JST）**：ar-caldera-aar-ar / ar-win-aar-ar-0。1 回目は Basic SKU パブリック IP の廃止で失敗 → `d112d9d` で Standard 化
+   - 既知の本家バグ（未修正）：`art_simulation_controller.py` の Azure 分岐で、Linux ターゲットのとき `private_key_path` を代入前に使っている。Linux を足すときに直す
 5. **疎通確認**：ar-win で ART（例 `T1003.001`）→ core Splunk で検索できること。Caldera エージェントのチェックイン
 6. **Splunk MCP Server app**（Splunkbase 7931。DL はユーザーが Splunk.com ログインで実施）→ まず Claude Code から MCP 接続
 7. **Foundry 側エージェント**：モデル＝Foundry、MCP クライアント＝core VNet 内の自作エージェント（Foundry SDK）。AI-901 の SDK 範囲も兼ねる
