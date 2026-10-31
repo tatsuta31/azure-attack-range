@@ -2,10 +2,13 @@
 #   .\ar.ps1                 -> interactive bash in /work/attack_range
 #   .\ar.ps1 az account show -> run one command and exit
 #   .\ar.ps1 -Build          -> (re)build the image first
+# No [Parameter()] attributes on purpose: they turn this into an advanced script
+# with common parameters, and az flags like "-o" then collide with -OutVariable/-OutBuffer.
+# Everything that is not -Build stays in $args and is passed to the container as-is.
 param(
-    [switch]$Build,
-    [Parameter(ValueFromRemainingArguments = $true)][string[]]$Cmd
+    [switch]$Build
 )
+$Cmd = $args
 
 $ErrorActionPreference = 'Stop'
 $root  = $PSScriptRoot
