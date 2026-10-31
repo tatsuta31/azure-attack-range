@@ -16,5 +16,9 @@ splunk_admin_password = "change-me-please"
 foundry_model_name    = "gpt-4.1-mini"
 foundry_model_version = "2025-04-14"
 
+# Foundry を Entra ID で使う人（あなた）のオブジェクト ID
+#   Cloud Shell: az ad signed-in-user show --query id -o tsv
+foundry_user_object_ids = ["00000000-0000-0000-0000-000000000000"]
+
 # 構築・作り直しの最中は false。安定したら true にして apply
 enable_delete_locks = false

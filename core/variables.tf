@@ -167,6 +167,12 @@ variable "foundry_model_capacity" {
   default     = 10
 }
 
+variable "foundry_user_object_ids" {
+  description = "Foundry のモデルを Entra ID で呼べるようにする人（ユーザーのオブジェクト ID）。Cloud Shell で az ad signed-in-user show --query id -o tsv"
+  type        = list(string)
+  default     = []
+}
+
 variable "foundry_local_auth_enabled" {
   description = "API キー認証を許すか。false なら Entra ID（az login / マネージド ID）のみ"
   type        = bool

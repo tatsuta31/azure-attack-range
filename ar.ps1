@@ -23,8 +23,11 @@ $dockerArgs = @(
     '-v', "${root}:/work",
     '-v', 'aar-azure:/root/.azure',
     '-v', 'aar-ssh:/root/.ssh',
-    '-w', '/work/attack_range',
-    $image
+    '-w', '/work/attack_range'
 )
+# Service principal credentials (ARM_*) for Terraform / docker/sp-login.sh. See .env.example.
+$envFile = Join-Path $root '.env'
+if (Test-Path $envFile) { $dockerArgs += @('--env-file', $envFile) }
+$dockerArgs += $image
 if ($Cmd) { $dockerArgs += $Cmd }
 & docker @dockerArgs

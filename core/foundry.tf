@@ -66,8 +66,10 @@ resource "azurerm_cognitive_deployment" "model" {
 
 # API キーを無効にしているので、apply した本人（az login のユーザー）に
 # Entra ID でモデルを呼べる権限を付ける。
-resource "azurerm_role_assignment" "me_foundry_user" {
+# 付与先は変数で明示する。apply は SP で行うので、client_config.current だと SP 自身に付いてしまう。
+resource "azurerm_role_assignment" "foundry_user" {
+  for_each             = toset(var.foundry_user_object_ids)
   scope                = azurerm_cognitive_account.foundry.id
   role_definition_name = "Azure AI User"
-  principal_id         = data.azurerm_client_config.current.object_id
+  principal_id         = each.value
 }
