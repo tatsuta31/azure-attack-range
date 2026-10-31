@@ -40,7 +40,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\ar.ps1 az login --use-devi
 
 1. **ログイン確認**：`az account show`、従量課金サブスクの ID を控える
 2. **クォータ確認**：`az vm list-usage -l japaneast -o table`。目安 合計 10〜16 vCPU（Splunk 4〜8 / Windows 2〜4 / Caldera 2）。足りなければユーザーにクォータ申請を依頼
-3. **`core/` の Terraform**：**コードは完成（2026-10-31）**。`terraform validate` 通過、cloud-init スクリプトのレンダリングと `bash -n` も確認済み、既定の TA 8 本が S3 に存在することも確認済み。**未コミット**。実行はユーザー（手順は `core/README.md`）
+3. **`core/` の Terraform**：**apply 済み（2026-11-01、15 リソース）**。Splunk 10.10.1.10 / パブリック IP <core-splunk-public-ip>、Foundry `aar-core-foundry-<suffix>`、モデル gpt-4.1-mini（gpt-5.4-mini は GlobalStandard の枠が 0。使うなら引き上げ申請）、ロールは Cognitive Services User（テナントに `Azure AI User` は無い）。初回 apply では Project とデプロイの並列作成が 409 になったので depends_on で直列化済み。以下は当初のメモ：`terraform validate` 通過、cloud-init スクリプトのレンダリングと `bash -n` も確認済み、既定の TA 8 本が S3 に存在することも確認済み。**未コミット**。実行はユーザー（手順は `core/README.md`）
    - ユーザーが tfvars に埋める値：サブスク ID、自宅 IP、Splunk 10.6.1 の .tgz の URL と SHA512（公式ページから）、admin パスワード、モデル名とバージョン（Japan East で使えるもの）
    - 未検証（apply して初めて分かる）：ロール名 `Azure AI User` の割り当て、Splunk 10.6.1 が Ubuntu 24.04 で cloud-init から正常に起動するか、モデル名とバージョン
 4. **Attack Range v4.0.2 へのパッチ**：**完了（2026-11-01、4 コミット＋設定見本）**。`terraform validate` 通過、設定見本は本家の ConfigHandler で読めることを確認済み
