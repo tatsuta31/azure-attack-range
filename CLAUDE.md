@@ -2,6 +2,8 @@
 
 Azure 上に検知検証ラボを作る。Atomic Red Team / Caldera で攻撃 → Splunk で検知 → Splunk MCP 経由で AI（Foundry）に解析させる。AI-901 対策も兼ねる。
 
+**作業を再開するときは、まず `HANDOFF.md`（進捗と次の一手）を読むこと。**
+
 ## 構成の決定事項（2026-10-30）
 
 - **2層構成**
