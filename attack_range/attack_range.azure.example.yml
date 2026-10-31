@@ -29,6 +29,9 @@ windows_servers:
   - hostname: ar-win
     windows_image: "windows-server-2022"
     install_caldera_agent: "1"
+    # 既定の SwiftOnSecurity.xml は ProcessAccess（EventCode 10）を記録しないので、
+    # LSASS アクセス（T1003.001）などが見えない。Attack Range 版の設定を使う。
+    win_sysmon_config: "AttackRangeSysmon.xml"
 
 # Linux も検証するときはコメントを外す（vCPU クォータに注意）
 # linux_servers:
