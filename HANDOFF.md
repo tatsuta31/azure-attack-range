@@ -2,6 +2,11 @@
 
 前セッション（workbench で起動）からの引き継ぎ。**設計の決定事項と罠は `CLAUDE.md` が正**。ここは「どこまで進んだか」と「次に何をやるか」だけ。完了したら該当行を消すか更新すること。
 
+## 役割分担（2026-10-31 決定）
+
+- **ユーザー**：Azure の実操作すべて（az login、terraform apply、Attack Range の build / destroy、ポータル操作）
+- **Claude**：コード・設定ファイルの作成、解説、レビュー。ユーザーが打つコマンドは PowerShell 形式で渡す。Azure に変更を加えるコマンドは Claude から実行しない
+
 ## 完了済み
 
 - [x] プロジェクト作成、splunk/attack_range **v4.0.2 を pristine でベンダリング**（commit `735c91b`）
@@ -11,6 +16,13 @@
 - [x] Docker Desktop 導入・エンジン起動確認（28 CPU / 16GB）
 
 ## 今ここ：ユーザーの `az login` 待ち
+
+**2026-10-31：デバイスコードでのログインが `AADSTS530035: Access has been blocked by security defaults` で拒否された**（テナント `<tenant-id>` 既定のディレクトリ）。サインイン自体は成功していて、テナントのポリシーで止められている。対処はユーザーが選ぶ。候補は次の3つ。
+- Cloud Shell で Terraform 用のサービスプリンシパルを作り、コンテナではその SP でログインする（推奨）
+- ホストに az CLI を入れてブラウザでログインする
+- Security Defaults を無効化する（非推奨）
+
+ユーザーが `!` プレフィックスで叩く場合、Git Bash 経由になり `\` が消える。TROUBLESHOOTING.md 2026-10-31 を参照。
 
 このPCは PowerShell の実行ポリシーが既定（Restricted）で `.\ar.ps1` が弾かれる。**実行ポリシーの変更はユーザー本人の判断・操作**（Claude はセキュリティ設定を変えない）。当面はプロセス限定のバイパスで回避：
 
@@ -26,14 +38,9 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\ar.ps1 az login --use-devi
 
 1. **ログイン確認**：`az account show`、従量課金サブスクの ID を控える
 2. **クォータ確認**：`az vm list-usage -l japaneast -o table`。目安 合計 10〜16 vCPU（Splunk 4〜8 / Windows 2〜4 / Caldera 2）。足りなければユーザーにクォータ申請を依頼
-3. **`core/` の Terraform を書く**（消さない基盤。state は range と別）
-   - RG `aar-core`（Japan East）＋ **CanNotDelete ロック**
-   - VNet `10.10.0.0/16`（range 側 `10.0.0.0/16` と重ならないこと）
-   - Splunk VM：Ubuntu 22.04/24.04、Splunk Enterprise **10.6.1**（DL URL とハッシュは公式で要確認）、静的プライベート IP、**自動シャットダウン**
-   - NSG：自宅グローバル IP のみ 22 / 8000。**8089（MCP 含む管理ポート）は外部公開しない**。9997 は range VNet からのみ
-   - インデックス・TA：range 側 UF が送ってくる index 名を v4.0.2 の Ansible ロールから拾って作成。TA は Attack Range の公開 S3（`attack-range-appbinaries`）から流用
-   - Microsoft Foundry：AI Services アカウント（project management 有効）＋ Project ＋ モデルデプロイ（Japan East で使えるモデルを確認）
-   - 実装は自己完結なので `/haiku-delegate` で Haiku に振り、Opus がレビュー可
+3. **`core/` の Terraform**：**コードは完成（2026-10-31）**。`terraform validate` 通過、cloud-init スクリプトのレンダリングと `bash -n` も確認済み、既定の TA 8 本が S3 に存在することも確認済み。**未コミット**。実行はユーザー（手順は `core/README.md`）
+   - ユーザーが tfvars に埋める値：サブスク ID、自宅 IP、Splunk 10.6.1 の .tgz の URL と SHA512（公式ページから）、admin パスワード、モデル名とバージョン（Japan East で使えるもの）
+   - 未検証（apply して初めて分かる）：ロール名 `Azure AI User` の割り当て、Splunk 10.6.1 が Ubuntu 24.04 で cloud-init から正常に起動するか、モデル名とバージョン
 4. **Attack Range v4.0.2 へのパッチ**（パッチ単位でコミット）
    - BYO Splunk：`splunk_server.byo_splunk: "1"`, `byo_splunk_ip: <core の Splunk IP>`
    - `terraform/azure/modules/network` に **双方向 VNet ピアリング**を追加（core の VNet ID を設定から受け取る。range destroy で両側消える）

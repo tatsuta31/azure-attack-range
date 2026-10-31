@@ -1,0 +1,26 @@
+#cloud-config
+# 中身は全部 base64 で渡す（YAML のインデントや $ の解釈で壊れないように）
+write_files:
+  - path: /opt/aar/install-splunk.sh
+    permissions: "0700"
+    encoding: b64
+    content: ${install_script_b64}
+  - path: /opt/aar/conf/indexes.conf
+    permissions: "0644"
+    encoding: b64
+    content: ${indexes_conf_b64}
+  - path: /opt/aar/conf/inputs.conf
+    permissions: "0644"
+    encoding: b64
+    content: ${inputs_conf_b64}
+  - path: /opt/aar/conf/web.conf
+    permissions: "0644"
+    encoding: b64
+    content: ${web_conf_b64}
+  - path: /opt/aar/conf/user-seed.conf
+    permissions: "0600"
+    encoding: b64
+    content: ${user_seed_b64}
+
+runcmd:
+  - [bash, -c, "/opt/aar/install-splunk.sh > /var/log/aar-install-splunk.log 2>&1"]

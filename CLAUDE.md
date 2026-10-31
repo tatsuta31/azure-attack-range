@@ -7,7 +7,10 @@ Azure 上に検知検証ラボを作る。Atomic Red Team / Caldera で攻撃 �
 ## 構成の決定事項（2026-10-30）
 
 - **2層構成**
-  - `core/`：消さない基盤（自前 Terraform）。Splunk 10.6.1 + Splunk MCP Server app、Microsoft Foundry。RG に削除ロック
+  - `core/`：消さない基盤（自前 Terraform）。Splunk 10.6.1 + Splunk MCP Server app、Microsoft Foundry。削除ロックは **RG ではなく Splunk VM と Foundry に個別に付ける**（2026-10-31 変更）。RG や VNet に付けると、range destroy で core VNet 側のピアリング（VNet の子リソース）が消せず、destroy が毎回失敗するため
+- core の azurerm は **4.x（~> 4.81）に固定**。5.x は 2026 年に出たばかりで破壊的変更があり、必要な Foundry リソースは 4.x でそろっている。range 側（本家）は `~> 3.6.0` のまま。state も provider も別なので衝突しない
+- core Splunk は Ansible ではなく **cloud-init** で構成する。indexes.conf は本家ロールのファイルを `filebase64` で直接読み、range の UF が送ってくる index 名と必ず一致させる
+- NSG：Azure 既定の AllowVnetInBound はピアリング先も信頼するので、range VNet からは 9997 だけ許可し、それ以外は明示的に Deny（range の VM は侵害させる前提の端末）
   - `attack_range/`：splunk/attack_range **v4.0.2 をベンダリングしてパッチ**。build/destroy を繰り返す使い捨て
 - 連携は Attack Range 標準の **BYO Splunk**（`splunk_server.byo_splunk: "1"` / `byo_splunk_ip`）。これで range 側の Splunk VM は count=0 になる
 - 環境：従量課金サブスク（個人）、リージョン Japan East

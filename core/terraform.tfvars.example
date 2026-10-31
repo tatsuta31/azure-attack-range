@@ -1,0 +1,20 @@
+# コピーして terraform.tfvars にリネームし、値を埋める（terraform.tfvars は .gitignore 済み）
+
+subscription_id = "00000000-0000-0000-0000-000000000000"
+
+# 自宅のグローバル IP（PowerShell: (Invoke-WebRequest ifconfig.me -UseBasicParsing).Content）
+allowed_source_cidrs = ["203.0.113.10/32"]
+
+# Splunk 公式ダウンロードページの Linux .tgz の wget リンクと SHA512
+splunk_url    = "https://download.splunk.com/products/splunk/releases/10.6.1/linux/splunk-10.6.1-XXXXXXXXXXXX-linux-amd64.tgz"
+splunk_sha512 = ""
+
+splunk_admin_password = "change-me-please"
+
+# Japan East で使えるモデルを確認して指定する
+#   az cognitiveservices model list -l japaneast --query "[?model.format=='OpenAI'].{name:model.name, version:model.version}" -o table
+foundry_model_name    = "gpt-4.1-mini"
+foundry_model_version = "2025-04-14"
+
+# 構築・作り直しの最中は false。安定したら true にして apply
+enable_delete_locks = false

@@ -1,0 +1,59 @@
+#!/bin/bash
+# core Splunk の初回セットアップ。cloud-init が 1 回だけ実行する。
+# ログ: /var/log/aar-install-splunk.log
+# 注意: Terraform の templatefile で展開されるので、bash の変数は波括弧なしで書く。
+set -euo pipefail
+
+SPLUNK_HOME=/opt/splunk
+SPLUNK_URL='${splunk_url}'
+SPLUNK_SHA512='${splunk_sha512}'
+APPS_BASE_URL='${apps_base_url}'
+
+echo "[aar] start: $(date -Is)"
+
+if [ -x "$SPLUNK_HOME/bin/splunk" ]; then
+  echo "[aar] Splunk is already installed. nothing to do."
+  exit 0
+fi
+
+# --- 1. 本体のダウンロードと検証 ---
+curl -fsSL --retry 5 -o /tmp/splunk.tgz "$SPLUNK_URL"
+if [ -n "$SPLUNK_SHA512" ]; then
+  echo "$SPLUNK_SHA512  /tmp/splunk.tgz" | sha512sum -c -
+else
+  echo "[aar] WARNING: splunk_sha512 is empty. skipping hash check."
+fi
+
+# --- 2. 展開と専用ユーザー ---
+id splunk >/dev/null 2>&1 || useradd --system --home-dir "$SPLUNK_HOME" --shell /bin/bash splunk
+tar -xzf /tmp/splunk.tgz -C /opt
+rm -f /tmp/splunk.tgz
+
+# --- 3. 設定（自前のアプリ aar_base にまとめる） ---
+install -d "$SPLUNK_HOME/etc/apps/aar_base/local"
+cp /opt/aar/conf/indexes.conf "$SPLUNK_HOME/etc/apps/aar_base/local/indexes.conf"
+cp /opt/aar/conf/inputs.conf  "$SPLUNK_HOME/etc/apps/aar_base/local/inputs.conf"
+cp /opt/aar/conf/web.conf     "$SPLUNK_HOME/etc/system/local/web.conf"
+install -m 0600 /opt/aar/conf/user-seed.conf "$SPLUNK_HOME/etc/system/local/user-seed.conf"
+shred -u /opt/aar/conf/user-seed.conf
+
+# --- 4. TA（Attack Range の公開 S3 から） ---
+# .tgz を etc/apps に展開するだけでインストールになる（起動前なので認証不要）
+mkdir -p /tmp/aar-apps
+%{ for app in splunk_apps ~}
+echo "[aar] app: ${app}"
+if curl -gfsSL --retry 3 -o "/tmp/aar-apps/app.tgz" "$APPS_BASE_URL/${app}"; then
+  tar -xzf /tmp/aar-apps/app.tgz -C "$SPLUNK_HOME/etc/apps"
+else
+  echo "[aar] WARNING: failed to download ${app}. skipped."
+fi
+%{ endfor ~}
+rm -rf /tmp/aar-apps
+
+# --- 5. 起動（systemd 管理） ---
+chown -R splunk:splunk "$SPLUNK_HOME"
+"$SPLUNK_HOME/bin/splunk" enable boot-start -user splunk -systemd-managed 1 \
+  --accept-license --answer-yes --no-prompt
+systemctl start Splunkd
+
+echo "[aar] done: $(date -Is)"
