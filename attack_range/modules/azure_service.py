@@ -56,12 +56,15 @@ def get_public_ip(vm_obj):
     return public_ip.ip_address
 
 
-def change_instance_state(key_name, ar_name, new_state, log):
+def change_instance_state(key_name, ar_name, new_state, log, vm_names=None):
     credential = AzureCliCredential()
     subscription_id = os.environ["AZURE_SUBSCRIPTION_ID"]
     compute_client = ComputeManagementClient(credential, subscription_id)
 
     instances = get_all_instances(key_name, ar_name)
+    # azure-attack-range patch: optional filter by VM name (--instance_ids)
+    if vm_names:
+        instances = [i for i in instances if i['vm_obj'].name in vm_names]
 
     if new_state == 'stopped':
         for instance in instances:
@@ -69,13 +72,13 @@ def change_instance_state(key_name, ar_name, new_state, log):
                 # azure-attack-range patch: deallocate instead of power off.
                 # A powered-off (but allocated) Azure VM keeps billing for compute.
                 async_vm_stop = compute_client.virtual_machines.begin_deallocate("ar-rg-" + key_name + '-' + ar_name, instance['vm_obj'].name)
-                log.info('Successfully stopped (deallocated) instance ' + instance['vm_obj'].name + ' .')
+                log.info('Deallocation requested for ' + instance['vm_obj'].name + ' (takes a few minutes; check with show).')
 
     elif new_state == 'running':
         for instance in instances:
             if instance['vm_obj'].instance_view.statuses[1].display_status in ("VM stopped", "VM deallocated"):
                 async_vm_start = compute_client.virtual_machines.begin_start("ar-rg-" + key_name + '-' + ar_name, instance['vm_obj'].name)
-                log.info('Successfully started instance ' + instance['vm_obj'].name + ' .')
+                log.info('Start requested for ' + instance['vm_obj'].name + ' (takes a few minutes; check with show).')
 
 
 def create_ressource_group(region):

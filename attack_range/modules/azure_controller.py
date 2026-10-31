@@ -104,20 +104,25 @@ class AzureController(AttackRangeController):
         )
         self.logger.info("attack_range has been destroy using terraform successfully")
 
-    def stop(self) -> None:
+    # azure-attack-range patch: attack_range.py calls stop/resume with instance_ids
+    # (AWS/GCP accept it), so the Azure versions crashed with a TypeError.
+    # Here the ids are Azure VM names, e.g. --instance_ids ar-win-aar-ar-0
+    def stop(self, instances_ids=None) -> None:
         azure_service.change_instance_state(
             self.config["general"]["key_name"],
             self.config["general"]["attack_range_name"],
             "stopped",
             self.logger,
+            instances_ids,
         )
 
-    def resume(self) -> None:
+    def resume(self, instances_ids=None) -> None:
         azure_service.change_instance_state(
             self.config["general"]["key_name"],
             self.config["general"]["attack_range_name"],
             "running",
             self.logger,
+            instances_ids,
         )
 
     def simulate(self, engine, target, technique, playbook) -> None:
