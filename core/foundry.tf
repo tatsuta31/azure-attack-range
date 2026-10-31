@@ -62,14 +62,17 @@ resource "azurerm_cognitive_deployment" "model" {
     name     = var.foundry_model_sku
     capacity = var.foundry_model_capacity
   }
+
+  # 同じアカウントへの変更は 1 つずつしか受け付けない（並列だと 409 RequestConflict）。
+  # Terraform は依存関係がないと並列に作るので、Project の後に作らせる。
+  depends_on = [azurerm_cognitive_account_project.lab]
 }
 
-# API キーを無効にしているので、apply した本人（az login のユーザー）に
-# Entra ID でモデルを呼べる権限を付ける。
+# API キーを無効にしているので、Entra ID でモデルを呼べる権限を人に付ける。
 # 付与先は変数で明示する。apply は SP で行うので、client_config.current だと SP 自身に付いてしまう。
 resource "azurerm_role_assignment" "foundry_user" {
   for_each             = toset(var.foundry_user_object_ids)
   scope                = azurerm_cognitive_account.foundry.id
-  role_definition_name = "Azure AI User"
+  role_definition_name = var.foundry_user_role
   principal_id         = each.value
 }

@@ -173,6 +173,12 @@ variable "foundry_user_object_ids" {
   default     = []
 }
 
+variable "foundry_user_role" {
+  description = "foundry_user_object_ids に付けるロール名。テナントで使える名前を az role definition list で確認する"
+  type        = string
+  default     = "Cognitive Services User"
+}
+
 variable "foundry_local_auth_enabled" {
   description = "API キー認証を許すか。false なら Entra ID（az login / マネージド ID）のみ"
   type        = bool
