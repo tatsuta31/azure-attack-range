@@ -323,6 +323,19 @@ class AzureController(AttackRangeController):
                         + "\n\tusername: kali \n\tpassword: "
                         + self.config["general"]["attack_range_password"]
                     )
+                elif instance_name.startswith("ar-caldera"):
+                    # azure-attack-range patch: Azure Caldera server
+                    messages.append(
+                        "\nAccess Caldera via:\n\tWeb > http://"
+                        + instance["public_ip"]
+                        + ":8888"
+                        + "\n\tSSH > ssh -i"
+                        + self.config["azure"]["private_key_path"]
+                        + " caldera@"
+                        + instance["public_ip"]
+                        + "\n\tusername: admin \n\tpassword: "
+                        + self.config["general"]["attack_range_password"]
+                    )
                 elif instance_name.startswith("ar-nginx"):
                     messages.append(
                         "\nAccess Nginx Web Proxy via:\n\tSSH > ssh -i"

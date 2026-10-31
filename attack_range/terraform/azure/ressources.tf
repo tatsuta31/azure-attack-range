@@ -41,6 +41,8 @@ module "windows-server" {
   simulation = var.simulation
   splunk_server = var.splunk_server
   caldera_server = var.caldera_server
+  # azure-attack-range patch: the caldera_agent role downloads the agent from the server
+  depends_on = [module.caldera-server]
 }
 
 module "linux-server" {
@@ -52,6 +54,17 @@ module "linux-server" {
   linux_servers = var.linux_servers
   simulation = var.simulation
   splunk_server = var.splunk_server
+  caldera_server = var.caldera_server
+  depends_on = [module.caldera-server]
+}
+
+# azure-attack-range patch: Caldera server (v4.0.2 had no Azure module)
+module "caldera-server" {
+  source = "./modules/caldera-server"
+  rg_name = module.networkModule.rg_name
+  subnet_id = module.networkModule.subnet_id
+  azure = var.azure
+  general = var.general
   caldera_server = var.caldera_server
 }
 
