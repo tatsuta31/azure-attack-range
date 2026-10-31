@@ -6,3 +6,4 @@ variable "azure" { }
 variable "windows_servers" { }
 variable "simulation" { }
 variable "splunk_server" { }
+variable "caldera_server" { }

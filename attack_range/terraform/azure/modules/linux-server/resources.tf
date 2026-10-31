@@ -77,6 +77,7 @@ resource "azurerm_virtual_machine" "linux" {
         "ansible_python_interpreter": "/usr/bin/python3",
         "general": ${jsonencode(var.general)},
         "splunk_server": ${jsonencode(var.splunk_server)},
+        "caldera_server": ${jsonencode(var.caldera_server)},
         "linux_servers": ${jsonencode(var.linux_servers[count.index])},
         "simulation": ${jsonencode(var.simulation)},
       }

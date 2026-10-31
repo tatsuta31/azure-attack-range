@@ -99,10 +99,11 @@ resource "azurerm_virtual_machine" "windows" {
       {
         "ansible_user": "AzureAdmin",
         "ansible_port": 5985,
-        "ansible_password": ${var.general.attack_range_password},
-        "attack_range_password": ${var.general.attack_range_password},
+        "ansible_password": ${jsonencode(var.general.attack_range_password)},
+        "attack_range_password": ${jsonencode(var.general.attack_range_password)},
         "general": ${jsonencode(var.general)},
         "splunk_server": ${jsonencode(var.splunk_server)},
+        "caldera_server": ${jsonencode(var.caldera_server)},
         "simulation": ${jsonencode(var.simulation)},
         "windows_servers": ${jsonencode(var.windows_servers[count.index])},
       }
