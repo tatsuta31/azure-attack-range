@@ -52,7 +52,11 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\ar.ps1 az login --use-devi
    - 未検証（build して初めて分かる）：Debian 12 の Azure イメージ（`Debian/debian-12/12`）上で caldera_server ロールが通るか、UF 9.3.0 → Splunk 10.6.1 への転送
    - **build 成功（2026-11-01 06:31 JST）**：ar-caldera-aar-ar / ar-win-aar-ar-0。1 回目は Basic SKU パブリック IP の廃止で失敗 → `d112d9d` で Standard 化
    - 既知の本家バグ（未修正）：`art_simulation_controller.py` の Azure 分岐で、Linux ターゲットのとき `private_key_path` を代入前に使っている。Linux を足すときに直す
-5. **疎通確認**：ar-win で ART（例 `T1003.001`）→ core Splunk で検索できること。Caldera エージェントのチェックイン
+   - **疎通確認 完了（2026-11-01）**：ART T1003.001 → Sysmon EventCode 10（nanodump / rdrleakdiag / xordump / powershell → lsass）→ UF → ピアリング → core Splunk で検索できた
+     - Sysmon は `source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"`、`sourcetype=XmlWinEventLog`（sourcetype に sysmon は入らない）
+     - 既定の SwiftOnSecurity.xml は EventCode 10 を記録しない → `win_sysmon_config: "AttackRangeSysmon.xml"`。今の VM には手動で `sysmon64 -c` 済み
+   - 次：Caldera の動作確認（エージェントのチェックイン → Discovery 系の operation）→ 6. MCP
+5. **疎通確認**（当初のメモ）：ar-win で ART（例 `T1003.001`）→ core Splunk で検索できること。Caldera エージェントのチェックイン
 6. **Splunk MCP Server app**（Splunkbase 7931。DL はユーザーが Splunk.com ログインで実施）→ まず Claude Code から MCP 接続
 7. **Foundry 側エージェント**：モデル＝Foundry、MCP クライアント＝core VNet 内の自作エージェント（Foundry SDK）。AI-901 の SDK 範囲も兼ねる
 
