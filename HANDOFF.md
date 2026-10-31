@@ -24,6 +24,8 @@
 
 ユーザーが `!` プレフィックスで叩く場合、Git Bash 経由になり `\` が消える。TROUBLESHOOTING.md 2026-10-31 を参照。
 
+**決定（2026-11-01）：サービスプリンシパルで行く（権限は Contributor + User Access Administrator ＝ 実質 Owner）。** 受け入れの仕組みはコミット済み（`e995176`）：`.env`（ARM_*）→ `ar.ps1` が `--env-file` で渡す → `docker/sp-login.sh` でコンテナの az をログイン。Foundry のロールは `foundry_user_object_ids` に入れた人に付く。ユーザーが Cloud Shell で SP を作るのを待っている。
+
 このPCは PowerShell の実行ポリシーが既定（Restricted）で `.\ar.ps1` が弾かれる。**実行ポリシーの変更はユーザー本人の判断・操作**（Claude はセキュリティ設定を変えない）。当面はプロセス限定のバイパスで回避：
 
 ```powershell
