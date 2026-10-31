@@ -24,6 +24,7 @@ resource "azurerm_public_ip" "windows-publicip" {
   location            = var.azure.location
   resource_group_name = var.rg_name
   allocation_method   = "Static"
+  sku                 = "Standard" # azure-attack-range patch: Basic SKU public IPs are retired
 }
 
 resource "azurerm_virtual_machine" "windows" {
