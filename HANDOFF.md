@@ -61,6 +61,19 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\ar.ps1 az login --use-devi
 6. **Splunk MCP Server app**（Splunkbase 7931。DL はユーザーが Splunk.com ログインで実施）→ まず Claude Code から MCP 接続
 7. **Foundry 側エージェント**：モデル＝Foundry、MCP クライアント＝core VNet 内の自作エージェント（Foundry SDK）。AI-901 の SDK 範囲も兼ねる
 
+## 次回やりたいこと（2026-11-01 ユーザー談）
+
+1. **destroy の確認**：`python attack_range.py destroy` → range の RG と、core 側のピアリング（`ar-peer-from-aar-ar`）が消え、core 本体（VNet・Splunk・Foundry）は無傷であることを確認。その後に再 build（ART インストールのパッチと `win_sysmon_config: AttackRangeSysmon.xml` が効くかもここで見る）
+2. **構成の拡張**：DC ＋ Windows クライアント ＋ Linux、ドメイン参加、ユーザー作成、ハニーポット
+   - DC は `windows_servers` の 1 台目に `create_domain: "1"`、2 台目以降に `join_domain: "1"`
+   - Windows 10/11 は本家が `win10-21h2-pro` / `win11-21h2-pro` 固定 → Marketplace から消えている可能性大。要パッチ（`azure_controller.py` のイメージ対応表）
+   - Linux は `art_simulation_controller.py` の Azure 分岐で `private_key_path` を代入前に使う本家バグあり → simulate 前に直す
+   - Linux の VM は Standard_A4_v2（Av2 ファミリー）。クォータ未確認
+   - vCPU：DC 4 ＋ クライアント 4 ＋ Linux 4 ＋ Splunk 4 ＋ Caldera 2 ＝ 18 でリージョン上限 18 ちょうど。引き上げ申請を推奨
+   - ユーザー作成：本家に `bad_blood`（DC に大量の AD オブジェクトを作る）がある。手動で作るか BadBlood を使うか要相談
+   - ハニーポット：設計から相談（range 内に置くか、別セグメントか、何を検知させたいか）
+3. その後 6. MCP
+
 ## ユーザー側の宿題（状況確認すること）
 
 - Splunk **Developer License** の申請状況（未着なら 60 日トライアルで進める）
