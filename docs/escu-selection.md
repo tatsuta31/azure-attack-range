@@ -2,12 +2,18 @@
 
 対象：ESCU **5.18.0**（ラボの core Splunk に入っている版）。会社の環境（884 件）の版は未確認。ルール名は版をまたいでほぼ変わらないので、版が分かったら名前で突き合わせる。
 
+## 選定の範囲（2026-11-02 決定）
+
+- **対象にするログ**：ラボで実際に取れるログ ＋ **Palo Alto のログ（ある前提）**
+- **除外**：上記以外の製品のログが前提のルール（AWS、Azure AD、O365、CrowdStrike、Cisco、Okta など）。626 本
+- Palo はラボには**置かない**。区分 B は「Palo のログがあれば動くルール」として選ぶが、ラボでは再現・検証しない
+
 ## 選定の軸
 
 | 区分 | 再現手段 | 使うログ |
 |---|---|---|
 | A | ART / Caldera | Sysmon、Windows Security、PowerShell 4104、Linux（Sysmon for Linux / auditd） |
-| B | OpenCanary への通信を Palo Alto で検知 | Palo のトラフィック／脅威ログ（CIM の `Network_Traffic` / `Intrusion_Detection`） |
+| B | **ラボでは再現しない**（Palo 前提の選定のみ） | Palo のトラフィック／脅威ログ（CIM の `Network_Traffic` / `Intrusion_Detection`） |
 | C | RDP / SSH で入って手でコマンド実行 | A と同じ。親プロセスが `explorer.exe` や `sshd` になり、実戦に近い |
 
 前提：Windows は全台 `advanced_logging: "1"`（Kerberos 4768/4769、ディレクトリサービスアクセス 4662、ログオン 4624/4625、プロセス作成 4688 など）と `win_sysmon_config: "AttackRangeSysmon.xml"`。
@@ -20,7 +26,7 @@
 | ラボのログで動く | 1,235 | 製品なし（CrowdStrike、AWS、O365 など）626、追加設定が必要（5136 など）60、Palo 13 を除く |
 | 攻撃計画のテクニックに該当（TTP / Anomaly） | 437 | `escu/escu_5180_shortlist.csv` |
 | うち TTP | 293 | |
-| **本命（このファイルの下の表）** | **96** | 手で選定（エンドポイント 83 ＋ ネットワーク 13）。全ルール名が 5.18.0 に実在することを機械照合済み |
+| **本命（このファイルの下の表）** | **98** | 手で選定（エンドポイント 83 ＋ ネットワーク 15）。全ルール名が 5.18.0 に実在することを機械照合済み |
 
 全件の仕分け結果は `escu/escu_5180_classified.csv`（列 `bucket` が A/B/C/-、`availability` が ok/config/palo/no）。再生成は `tools/escu/` のスクリプトで行う（手順は末尾）。
 
@@ -146,11 +152,13 @@
 | Linux SSH Remote Services Script Execute | T1021.004 | C | SSH で入って実行 |
 | Linux Auditd Whoami User Discovery | T1033 | A / C | |
 
-## 本命リスト（B：ネットワーク / Palo Alto ＋ OpenCanary）
+## 本命リスト（B：ネットワーク / Palo Alto のログ前提）
 
-データソース欄が Cisco や AWS でも、中身が CIM の `Network_Traffic` を見ているルールは Palo の TA（CIM 対応）でそのまま動く。
+データソース欄が Cisco や AWS でも、中身が CIM の `Network_Traffic` を見ているルールは Palo の TA（CIM 対応）でそのまま動く。ラボに Palo は置かないので、右の列は「Palo があればこう再現できる」という参考。
 
-| ルール | ATT&CK | OpenCanary での再現 |
+Palo のデータソースを名指ししている 13 本のうち、特定製品の脆弱性悪用（F5 BIG-IP、Confluence、FortiNAC、Fortinet、Citrix ADC、VMware Aria / Workspace ONE）の 8 本は、守る対象にその製品が無いので除外した。
+
+| ルール | ATT&CK | 再現の参考（Palo がある場合） |
 |---|---|---|
 | Internal Horizontal Port Scan | T1046 | 複数ホストへの同一ポートのスキャン（OpenCanary を含むサブネットへ nmap） |
 | Internal Vertical Port Scan | T1046 | OpenCanary 1 台へのポートスキャン |
@@ -165,6 +173,8 @@
 | Detect Remote Access Software Usage Traffic | T1219 | Palo の App-ID（AnyDesk など） |
 | Detect Large ICMP Traffic | T1095 | 大きな ICMP |
 | TOR Traffic | T1090.003 | Palo の App-ID `tor` |
+| Detect Remote Access Software Usage URL | T1219 | Palo の URL フィルタリングのログ |
+| Detect Outbound LDAP Traffic | T1190, T1059 | 外向きの LDAP（Log4Shell の JNDI など）。Hunting |
 
 OpenCanary 自身のログ（アラート JSON）には ESCU のルールが無い。OpenCanary 側の検知は自作ルールで補う（別途）。
 
