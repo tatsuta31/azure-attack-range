@@ -61,6 +61,17 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\ar.ps1 az login --use-devi
 6. **Splunk MCP Server app**（Splunkbase 7931。DL はユーザーが Splunk.com ログインで実施）→ まず Claude Code から MCP 接続
 7. **Foundry 側エージェント**：モデル＝Foundry、MCP クライアント＝core VNet 内の自作エージェント（Foundry SDK）。AI-901 の SDK 範囲も兼ねる
 
+## ロードマップ（2026-11-02 ユーザー決定。この順で進める）
+
+1. **環境構築**：DC ＋ Windows 2 台 ＋ Windows Server ＋ Linux ＋ OpenCanary（Palo は置かない）
+2. **ルール有効化**：`docs/escu-selection.md` の本命を有効化し、ART / Caldera / 手動で発火を確認
+3. **Splunk MCP 構築**：Splunk MCP Server app を core Splunk に入れる
+4. **Foundry 構築**：Foundry のリソース・Project・モデル（gpt-4.1-mini）・ロールは core の Terraform で作成済み。ここでやるのはエージェントの作成と MCP との接続（ユーザーはポータルで手で作る練習もしたい可能性あり）
+5. **ログ連携確認**：エージェント → MCP → Splunk の検索が通ること
+6. **Foundry による分析**：発火したアラートを AI に解析させる
+
+並行：AI-901 を 1 週間程度で受験予定（Foundry 分野が 55〜60%）。
+
 ## 次回やりたいこと（2026-11-01 ユーザー談）
 
 1. **destroy の確認**：**2026-11-02 成功（ユーザー報告）**。`python attack_range.py destroy` → range の RG と、core 側のピアリング（`ar-peer-from-aar-ar`）が消え、core 本体（VNet・Splunk・Foundry）は無傷であることを確認。その後に再 build（ART インストールのパッチと `win_sysmon_config: AttackRangeSysmon.xml` が効くかもここで見る）
