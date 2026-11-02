@@ -3,6 +3,9 @@ module "networkModule" {
   source = "./modules/network"
   general = var.general
   azure = var.azure
+  # azure-attack-range patch: DMZ subnet/NSG for OpenCanary
+  opencanary_server = var.opencanary_server
+  splunk_server = var.splunk_server
 }
 
 module "splunk-server" {
@@ -66,6 +69,17 @@ module "caldera-server" {
   azure = var.azure
   general = var.general
   caldera_server = var.caldera_server
+}
+
+# azure-attack-range patch: OpenCanary honeypot in the DMZ subnet
+module "opencanary-server" {
+  source = "./modules/opencanary-server"
+  rg_name = module.networkModule.rg_name
+  dmz_subnet_id = module.networkModule.dmz_subnet_id
+  azure = var.azure
+  general = var.general
+  splunk_server = var.splunk_server
+  opencanary_server = var.opencanary_server
 }
 
 # kali linux image was removed from Azure marketplace

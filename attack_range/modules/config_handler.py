@@ -31,6 +31,7 @@ class ConfigHandler:
             "zeek_server",
             "snort_server",
             "caldera_server",
+            "opencanary_server",  # azure-attack-range patch
         ]
 
         for parent_key in parent_keys:

@@ -1,0 +1,167 @@
+---
+# azure-attack-range patch: OpenCanary honeypot + Splunk UF.
+# Runs as an unprivileged user with only CAP_NET_BIND_SERVICE; logs JSON lines to
+# /var/log/opencanary/opencanary.log, which the UF forwards to the BYO Splunk.
+
+- name: Install build dependencies [OpenCanary]
+  ansible.builtin.apt:
+    name:
+      - python3-venv
+      - python3-dev
+      - build-essential
+      - libssl-dev
+      - libffi-dev
+      - libpcap-dev
+    update_cache: true
+
+- name: Create service user [OpenCanary]
+  ansible.builtin.user:
+    name: opencanary
+    system: true
+    shell: /usr/sbin/nologin
+    create_home: false
+
+- name: Install OpenCanary into a venv [OpenCanary]
+  ansible.builtin.pip:
+    name: "opencanary{{ ('==' ~ opencanary_server.opencanary_version) if (opencanary_server.opencanary_version | default('')) else '' }}"
+    virtualenv: /opt/opencanary
+    virtualenv_command: python3 -m venv
+
+- name: Create the default config [OpenCanary]
+  # opencanaryd calls "python3" from PATH; without the venv first it hits the system
+  # Python and fails with "No module named 'opencanary'".
+  ansible.builtin.command: /opt/opencanary/bin/opencanaryd --copyconfig
+  args:
+    creates: /etc/opencanaryd/opencanary.conf
+  environment:
+    PATH: "/opt/opencanary/bin:{{ ansible_env.PATH }}"
+
+- name: Read the default config [OpenCanary]
+  ansible.builtin.slurp:
+    src: /etc/opencanaryd/opencanary.conf
+  register: canary_default
+
+- name: Start from the default config [OpenCanary]
+  ansible.builtin.set_fact:
+    canary_conf: "{{ canary_default.content | b64decode | from_json }}"
+    canary_services: "{{ opencanary_server.decoy_services.split(',') | map('trim') | list }}"
+
+- name: Disable every module first [OpenCanary]
+  ansible.builtin.set_fact:
+    canary_conf: "{{ canary_conf | combine({item: false}) }}"
+  loop: "{{ canary_conf.keys() | select('match', '.*\\.enabled$') | list }}"
+
+- name: Enable only the decoy services [OpenCanary]
+  ansible.builtin.set_fact:
+    canary_conf: "{{ canary_conf | combine({(item.split(':')[0] ~ '.enabled'): true, (item.split(':')[0] ~ '.port'): (item.split(':')[1] | int)}) }}"
+  loop: "{{ canary_services }}"
+
+- name: Log JSON lines to a file [OpenCanary]
+  ansible.builtin.set_fact:
+    canary_conf: >-
+      {{ canary_conf | combine({
+           'device.node_id': opencanary_server.hostname | default('ar-canary'),
+           'logger': {
+             'class': 'PyLogger',
+             'kwargs': {
+               'formatters': {'plain': {'format': '%(message)s'}},
+               'handlers': {'file': {'class': 'logging.FileHandler',
+                                     'filename': '/var/log/opencanary/opencanary.log',
+                                     'formatter': 'plain'}}
+             }
+           }
+         }) }}
+
+- name: Write the config [OpenCanary]
+  ansible.builtin.copy:
+    content: "{{ canary_conf | to_nice_json }}"
+    dest: /etc/opencanaryd/opencanary.conf
+    owner: root
+    group: opencanary
+    mode: "0640"
+  notify: restart opencanary
+
+- name: Create the log directory [OpenCanary]
+  ansible.builtin.file:
+    path: /var/log/opencanary
+    state: directory
+    owner: opencanary
+    group: opencanary
+    mode: "0750"
+
+- name: Install the systemd unit [OpenCanary]
+  ansible.builtin.copy:
+    src: opencanary.service
+    dest: /etc/systemd/system/opencanary.service
+    owner: root
+    group: root
+    mode: "0644"
+  notify: restart opencanary
+
+- name: Enable and start [OpenCanary]
+  ansible.builtin.systemd_service:
+    name: opencanary
+    enabled: true
+    state: started
+    daemon_reload: true
+
+# ---------------- Splunk Universal Forwarder ----------------
+
+- name: Install the UF [OpenCanary]
+  ansible.builtin.apt:
+    deb: "{{ splunk_server.splunk_uf_url }}"
+
+- name: Let the UF user read the honeypot log [OpenCanary]
+  ansible.builtin.user:
+    name: splunkfwd
+    groups: opencanary
+    append: true
+
+- name: Forward to the BYO Splunk [OpenCanary]
+  ansible.builtin.copy:
+    dest: /opt/splunkforwarder/etc/system/local/outputs.conf
+    content: |
+      [tcpout]
+      defaultGroup = aar
+
+      [tcpout:aar]
+      server = {{ splunk_server.byo_splunk_ip if splunk_server.byo_splunk == '1' else '10.0.1.12' }}:9997
+    owner: splunkfwd
+    group: splunkfwd
+    mode: "0644"
+
+- name: Monitor the honeypot log [OpenCanary]
+  ansible.builtin.copy:
+    dest: /opt/splunkforwarder/etc/system/local/inputs.conf
+    content: |
+      [default]
+      host = {{ opencanary_server.hostname | default('ar-canary') }}
+
+      [monitor:///var/log/opencanary/opencanary.log]
+      index = {{ opencanary_server.splunk_index | default('honeypot') }}
+      sourcetype = _json
+      disabled = 0
+    owner: splunkfwd
+    group: splunkfwd
+    mode: "0644"
+
+- name: Register the UF as a systemd service [OpenCanary]
+  ansible.builtin.command: >-
+    /opt/splunkforwarder/bin/splunk enable boot-start -systemd-managed 1 -user splunkfwd
+    --accept-license --answer-yes --no-prompt --seed-passwd {{ general.attack_range_password | quote }}
+  args:
+    creates: /etc/systemd/system/SplunkForwarder.service
+
+- name: Fix ownership of the UF [OpenCanary]
+  ansible.builtin.file:
+    path: /opt/splunkforwarder
+    owner: splunkfwd
+    group: splunkfwd
+    recurse: true
+
+- name: Start the UF [OpenCanary]
+  ansible.builtin.systemd_service:
+    name: SplunkForwarder
+    enabled: true
+    state: restarted
+    daemon_reload: true

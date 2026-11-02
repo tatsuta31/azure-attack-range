@@ -1,0 +1,6 @@
+# azure-attack-range patch: OpenCanary honeypot (DMZ). Called from terraform/azure/modules/opencanary-server.
+- hosts: all
+  gather_facts: true
+  become: true
+  roles:
+    - opencanary

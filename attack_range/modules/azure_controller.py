@@ -350,6 +350,21 @@ class AzureController(AttackRangeController):
                         + "\n\tusername: admin \n\tpassword: "
                         + self.config["general"]["attack_range_password"]
                     )
+                elif instance_name.startswith("ar-opencanary"):
+                    # azure-attack-range patch: OpenCanary honeypot (DMZ)
+                    oc = self.config.get("opencanary_server", {})
+                    messages.append(
+                        "\nOpenCanary honeypot (DMZ):\n\tDecoys > "
+                        + instance["public_ip"]
+                        + " "
+                        + oc.get("decoy_services", "")
+                        + "\n\tSSH (mgmt) > ssh -i"
+                        + self.config["azure"]["private_key_path"]
+                        + " -p "
+                        + oc.get("mgmt_ssh_port", "22222")
+                        + " canaryadmin@"
+                        + instance["public_ip"]
+                    )
                 elif instance_name.startswith("ar-nginx"):
                     messages.append(
                         "\nAccess Nginx Web Proxy via:\n\tSSH > ssh -i"

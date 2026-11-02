@@ -100,3 +100,12 @@ variable "caldera_server" {
         "caldera_server" = "0"
     }
 }
+
+# azure-attack-range patch: OpenCanary honeypot in a DMZ subnet
+variable "opencanary_server" {
+    type = map(string)
+
+    default = {
+        "opencanary_server" = "0"
+    }
+}

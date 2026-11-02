@@ -1,0 +1,35 @@
+[Unit]
+Description=OpenCanary honeypot (azure-attack-range)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=opencanary
+Group=opencanary
+WorkingDirectory=/var/lib/opencanary
+StateDirectory=opencanary
+# Same as "opencanaryd --dev" (twistd in the foreground) but without the wrapper,
+# which calls sudo whenever it is not root.
+ExecStart=/opt/opencanary/bin/twistd -noy /opt/opencanary/bin/opencanary.tac --pidfile /var/lib/opencanary/opencanary.pid
+Restart=on-failure
+RestartSec=5
+
+# Bind decoy ports below 1024 without running as root
+AmbientCapabilities=CAP_NET_BIND_SERVICE
+CapabilityBoundingSet=CAP_NET_BIND_SERVICE
+NoNewPrivileges=true
+
+# The honeypot only needs to write its log and twistd state
+ProtectSystem=strict
+ReadWritePaths=/var/log/opencanary /var/lib/opencanary
+ProtectHome=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+
+[Install]
+WantedBy=multi-user.target
