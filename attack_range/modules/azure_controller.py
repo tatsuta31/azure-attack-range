@@ -76,6 +76,15 @@ class AzureController(AttackRangeController):
                 self.logger.error("Image " + image_name + " not supported.")
                 sys.exit(1)
 
+            # azure-attack-range patch: allow the Marketplace SKU to be overridden per
+            # server in attack_range.yml (azure_image_sku). The hardcoded Windows 10/11
+            # SKUs (win10-21h2-pro / win11-21h2-pro) are end-of-life and get removed
+            # from the Marketplace; check current ones with
+            #   az vm image list-skus -l <region> -p MicrosoftWindowsDesktop -f windows-11
+            sku_override = self.config["windows_servers"][i].get("azure_image_sku")
+            if sku_override:
+                self.config["windows_servers"][i]["azure_sku"] = sku_override
+
     def build(self) -> None:
         self.logger.info("[action] > build\n")
         cwd = os.getcwd()

@@ -40,6 +40,9 @@ class ArtSimulationController(SimulationController):
                 self.config["general"]["key_name"],
                 self.config["general"]["attack_range_name"],
             )["public_ip"]
+            # azure-attack-range patch: assign before use (it was assigned after the
+            # Linux branch, so simulating against a Linux target raised UnboundLocalError)
+            private_key_path = self.config["azure"]["private_key_path"]
             if "win" in target:
                 ansible_user = "AzureAdmin"
                 ansible_port = 5985
@@ -56,7 +59,6 @@ class ArtSimulationController(SimulationController):
                     + target_public_ip
                     + ", "
                 )
-            private_key_path = self.config["azure"]["private_key_path"]
 
         elif self.config["general"]["cloud_provider"] == "gcp":
             target_public_ip = gcp_service.get_single_instance_public_ip(
