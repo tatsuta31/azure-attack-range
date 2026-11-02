@@ -33,7 +33,8 @@ resource "azurerm_virtual_machine" "windows" {
   location = var.azure.location
   resource_group_name   = var.rg_name
   network_interface_ids = [azurerm_network_interface.windows-nic[count.index].id]
-  vm_size               = "Standard_D4_v4"
+  # azure-attack-range patch: per-server size (windows_servers[].azure_vm_size) to spread VM families across quotas
+  vm_size               = try(var.windows_servers[count.index].azure_vm_size, "Standard_D4_v4")
 
   delete_os_disk_on_termination = true
 

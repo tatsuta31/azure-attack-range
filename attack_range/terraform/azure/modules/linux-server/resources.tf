@@ -28,7 +28,8 @@ resource "azurerm_virtual_machine" "linux" {
   location = var.azure.location
   resource_group_name  = var.rg_name
   network_interface_ids = [azurerm_network_interface.linux-nic[count.index].id]
-  vm_size               = "Standard_A4_v2"
+  # azure-attack-range patch: per-server size (linux_servers[].azure_vm_size)
+  vm_size               = try(var.linux_servers[count.index].azure_vm_size, "Standard_A4_v2")
   delete_os_disk_on_termination = true
 
   storage_os_disk {
