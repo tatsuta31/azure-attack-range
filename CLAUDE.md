@@ -15,6 +15,10 @@ Azure 上に検知検証ラボを作る。Atomic Red Team / Caldera で攻撃 �
 - 連携は Attack Range 標準の **BYO Splunk**（`splunk_server.byo_splunk: "1"` / `byo_splunk_ip`）。これで range 側の Splunk VM は count=0 になる
 - 環境：従量課金サブスク（個人）、リージョン Japan East
 - Caldera サーバーは range 側で使い捨て（10.0.1.70）
+- **OpenCanary は range VNet 内の DMZ サブネット（10.0.2.0/24）に隔離**（2026-11-02）。インターネットにも公開する（`internet_exposed: "1"`）。DMZ の NSG は「受信＝おとりのポート＋管理用 SSH（22222、ip_whitelist のみ）」「送信＝core Splunk 9997 とインターネット 80/443/123 だけ。VNet 宛ては全部拒否」。乗っ取られても内部に横展開させないため。ログは index `honeypot`（core Splunk に手で作る）
+- **Palo Alto はラボに置かない**。ESCU の選定は Palo のログがある前提で行う（`docs/escu-selection.md`）
+- Windows クライアントは Windows 11（`win11-26h2-pro`）。Azure では適格なライセンスが前提（ユーザー判断）
+- VM ファミリーごとのクォータ（Dv4 は 10 から上げられなかった）に合わせて、サーバーごとに `azure_vm_size` で DDv4 などに振り分ける
 
 ## v4.0.2 の罠（コードで確認済み）
 
@@ -24,6 +28,7 @@ Azure 上に検知検証ラボを作る。Atomic Red Team / Caldera で攻撃 �
 - 既定の Splunk は 9.3.0。BYO にするので range 側では使わない
 - Windows の ART インストールで `invoke-atomicredteam` だけ入らず（atomics は入る）、build は成功扱い、初回 simulate で `Invoke-AtomicTest is not recognized`。本家はエンジン側の `IWR` にだけ `-UseBasicParsing` が無い（PS 5.1 は付けないと IE エンジンで解析しようとして失敗し得る）。手動で `-UseBasicParsing` 付きで入れ直したら成功したので、これが原因とみている（元のエラーは未確認）。`31ddd6b` で `-UseBasicParsing`・`$ErrorActionPreference = "Stop"`・存在確認・リトライを追加
 - `attack_range.py stop` が `begin_power_off`（電源オフのみ、割り当てたまま）で、**止めても VM 料金が発生し続ける**。`fc56230` で `begin_deallocate` に変更し、resume も `VM deallocated` から起動できるようにした。ポータルの「停止」は割り当て解除なので OK
+- OpenCanary（0.9.10）の `opencanaryd --dev` は root でないと中で `sudo` を呼ぶ → systemd では `twistd -noy .../opencanary.tac` を直接起動。`--copyconfig` は PATH の `python3` を使うので venv を PATH の先頭に入れないと `No module named 'opencanary'`（使い捨てコンテナで確認済み）
 - パブリック IP が SKU 未指定（azurerm 3.6 の既定 = Basic）。Basic は 2025-09 に廃止され、新規作成は `IPv4BasicSkuPublicIpCountLimitReached` で失敗する → 全モジュールに `sku = "Standard"` を足した（Standard は NSG で許可したポートしか通らない「既定で安全」型。range の NSG はサブネットに付いているので動作は変わらない）
 - **本家 Dockerfile は `git clone` で既定ブランチ（v5）を取る**ので v4.0.2 のパッチが乗らない → 自前の `docker/Dockerfile`（ツールのみ、ソースは bind mount）
 - `configure` は SSH 鍵を CWD に作る。Windows の bind mount 上は 0777 に見えて ssh が拒否する → 鍵は名前付きボリューム `aar-ssh`（`/root/.ssh/aar.key`）に置き、configure では既存鍵を再利用
