@@ -1,0 +1,438 @@
+phase,plan_techniques,name,type,platform,bucket,reproduce,data_source,mitre
+C2/持ち込み,T1105,Linux Ingress Tool Transfer with Curl,Anomaly,linux,A,ART,Sysmon for Linux EventID 1,T1105
+C2/持ち込み,T1105,Windows DNS Query Request To TinyUrl,Anomaly,windows,A,ART,Sysmon EventID 22,T1105
+C2/持ち込み,T1105,Windows Ingress Tool Transfer Using Explorer,Anomaly,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1105
+C2/持ち込み,T1105,BITSAdmin Download File,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,"T1197,T1105"
+C2/持ち込み,T1105,Detect Certify Command Line Arguments,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,"T1649,T1105"
+C2/持ち込み,T1105,Download Files Using Telegram,TTP,windows,A,ART,Sysmon EventID 15,T1105
+C2/持ち込み,T1105,File Download or Read to Pipe Execution,TTP,windows,A,ART,Sysmon EventID 1 | Sysmon for Linux EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1105
+C2/持ち込み,T1105,LOLBAS With Network Traffic,TTP,windows,A,ART,Sysmon EventID 3,"T1105,T1567,T1218"
+C2/持ち込み,T1105,Linux Curl Upload File,TTP,linux,A,ART,Sysmon for Linux EventID 1,T1105
+C2/持ち込み,T1105,Suspicious Curl Network Connection,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1105
+C2/持ち込み,T1105,WinRAR Spawning Shell Application,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1105
+C2/持ち込み,T1105,Windows Cabinet File Extraction Via Expand,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1105
+C2/持ち込み,T1105,Windows Curl Download to Suspicious Path,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2 | Cisco Network Visibility Module Flow Data,T1105
+C2/持ち込み,T1105,Windows Curl Upload to Remote Destination,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2 | Cisco Network Visibility Module Flow Data,T1105
+C2/持ち込み,T1105,Windows File Download Via CertUtil,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2 | Cisco Network Visibility Module Flow Data,T1105
+C2/持ち込み,T1105,Windows SQL Spawning CertUtil,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1105
+C2/持ち込み,"T1105,T1069.002",Windows Ldifde Directory Object Behavior,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,"T1105,T1069.002"
+Linux,T1053.003,Linux Add Files In Known Crontab Directories,Anomaly,linux,A,ART,Sysmon for Linux EventID 11,T1053.003
+Linux,T1053.003,Linux At Allow Config File Creation,Anomaly,linux,A,ART,Sysmon for Linux EventID 11,T1053.003
+Linux,T1053.003,Linux Auditd Edit Cron Table Parameter,Anomaly,linux,A,ART,Linux Auditd Syscall,T1053.003
+Linux,T1070.003,Windows ConsoleHost History File Deletion,Anomaly,windows,A,ART,Sysmon EventID 23 | Sysmon EventID 26,T1070.003
+Linux,T1222.002,Linux Auditd Change File Owner To Root,Anomaly,linux,A,ART,Linux Auditd Proctitle,T1222.002
+Linux,T1222.002,Linux Auditd File Permission Modification Via Chmod,Anomaly,linux,A,ART,Linux Auditd Proctitle,T1222.002
+Linux,T1222.002,Linux Auditd File Permissions Modification Via Chattr,Anomaly,linux,A,ART,Linux Auditd Execve,T1222.002
+Linux,T1222.002,Linux Change File Owner To Root,Anomaly,linux,A,ART,Sysmon for Linux EventID 1,T1222.002
+Linux,T1548.003,Linux APT Privilege Escalation,Anomaly,linux,A,ART,Sysmon for Linux EventID 1,T1548.003
+Linux,T1548.003,Linux AWK Privilege Escalation,Anomaly,linux,A,ART,Sysmon for Linux EventID 1,T1548.003
+Linux,T1548.003,Linux Auditd Doas Tool Execution,Anomaly,linux,A,ART,Linux Auditd Syscall,T1548.003
+Linux,T1548.003,Linux Auditd Nopasswd Entry In Sudoers File,Anomaly,linux,A,ART,Linux Auditd Proctitle,T1548.003
+Linux,T1548.003,Linux Auditd Possible Access To Sudoers File,Anomaly,linux,A,ART,Linux Auditd Path,T1548.003
+Linux,T1548.003,Linux Auditd Sudo Or Su Execution,Anomaly,linux,A,ART,Linux Auditd Proctitle,T1548.003
+Linux,T1548.003,Linux Busybox Privilege Escalation,Anomaly,linux,A,ART,Sysmon for Linux EventID 1,T1548.003
+Linux,T1548.003,Linux Composer Privilege Escalation,Anomaly,linux,A,ART,Sysmon for Linux EventID 1,T1548.003
+Linux,T1548.003,Linux Cpulimit Privilege Escalation,Anomaly,linux,A,ART,Sysmon for Linux EventID 1,T1548.003
+Linux,T1548.003,Linux Csvtool Privilege Escalation,Anomaly,linux,A,ART,Sysmon for Linux EventID 1,T1548.003
+Linux,T1548.003,Linux Doas Conf File Creation,Anomaly,linux,A,ART,Sysmon for Linux EventID 11,T1548.003
+Linux,T1548.003,Linux Doas Tool Execution,Anomaly,linux,A,ART,Sysmon for Linux EventID 1,T1548.003
+Linux,T1548.003,Linux Docker Privilege Escalation,Anomaly,linux,A,ART,Sysmon for Linux EventID 1,T1548.003
+Linux,T1548.003,Linux Emacs Privilege Escalation,Anomaly,linux,A,ART,Sysmon for Linux EventID 1,T1548.003
+Linux,T1548.003,Linux Find Privilege Escalation,Anomaly,linux,A,ART,Sysmon for Linux EventID 1,T1548.003
+Linux,T1548.003,Linux GDB Privilege Escalation,Anomaly,linux,A,ART,Sysmon for Linux EventID 1,T1548.003
+Linux,T1548.003,Linux GNU Awk Privilege Escalation,Anomaly,linux,A,ART,Sysmon for Linux EventID 1,T1548.003
+Linux,T1548.003,Linux Gem Privilege Escalation,Anomaly,linux,A,ART,Sysmon for Linux EventID 1,T1548.003
+Linux,T1548.003,Linux Make Privilege Escalation,Anomaly,linux,A,ART,Sysmon for Linux EventID 1,T1548.003
+Linux,T1548.003,Linux MySQL Privilege Escalation,Anomaly,linux,A,ART,Sysmon for Linux EventID 1,T1548.003
+Linux,T1548.003,Linux NOPASSWD Entry In Sudoers File,Anomaly,linux,A,ART,Sysmon for Linux EventID 1,T1548.003
+Linux,T1548.003,Linux Node Privilege Escalation,Anomaly,linux,A,ART,Sysmon for Linux EventID 1,T1548.003
+Linux,T1548.003,Linux Octave Privilege Escalation,Anomaly,linux,A,ART,Sysmon for Linux EventID 1,T1548.003
+Linux,T1548.003,Linux OpenVPN Privilege Escalation,Anomaly,linux,A,ART,Sysmon for Linux EventID 1,T1548.003
+Linux,T1548.003,Linux PHP Privilege Escalation,Anomaly,linux,A,ART,Sysmon for Linux EventID 1,T1548.003
+Linux,T1548.003,Linux Possible Access To Sudoers File,Anomaly,linux,A,ART,Sysmon for Linux EventID 1,T1548.003
+Linux,T1548.003,Linux Puppet Privilege Escalation,Anomaly,linux,A,ART,Sysmon for Linux EventID 1,T1548.003
+Linux,T1548.003,Linux RPM Privilege Escalation,Anomaly,linux,A,ART,Sysmon for Linux EventID 1,T1548.003
+Linux,T1548.003,Linux Ruby Privilege Escalation,Anomaly,linux,A,ART,Sysmon for Linux EventID 1,T1548.003
+Linux,T1548.003,Linux Sqlite3 Privilege Escalation,Anomaly,linux,A,ART,Sysmon for Linux EventID 1,T1548.003
+Linux,T1548.003,Linux Sudoers Tmp File Creation,Anomaly,linux,A,ART,Sysmon for Linux EventID 11,T1548.003
+Linux,T1548.003,Linux Visudo Utility Execution,Anomaly,linux,A,ART,Sysmon for Linux EventID 1,T1548.003
+Linux,T1548.003,Linux apt-get Privilege Escalation,Anomaly,linux,A,ART,Sysmon for Linux EventID 1,T1548.003
+Linux,T1548.003,Linux c89 Privilege Escalation,Anomaly,linux,A,ART,Sysmon for Linux EventID 1,T1548.003
+Linux,T1548.003,Linux c99 Privilege Escalation,Anomaly,linux,A,ART,Sysmon for Linux EventID 1,T1548.003
+Linux,T1548.003,Linux Auditd Doas Conf File Creation,TTP,linux,A,ART,Linux Auditd Path,T1548.003
+偵察,T1016,Linux Auditd System Network Configuration Discovery,Anomaly,linux,A,ART/Caldera,Linux Auditd Syscall,T1016
+偵察,T1016,Linux System Network Discovery,Anomaly,linux,A,ART/Caldera,Sysmon for Linux EventID 1,T1016
+偵察,T1016,Potential System Network Configuration Discovery Activity,Anomaly,windows,A,ART/Caldera,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1016
+偵察,T1016,Windows System Network Config Discovery Display DNS,Anomaly,windows,A,ART/Caldera,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1016
+偵察,"T1016,T1059.001",Windows PowerShell Invoke-RestMethod IP Information Collection,Anomaly,windows,A,ART/Caldera,Powershell Script Block Logging 4104,"T1082,T1016,T1059.001"
+偵察,T1018,Remote System Discovery with Dsquery,Anomaly,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1018
+偵察,T1018,Domain Controller Discovery with Nltest,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1018
+偵察,T1018,GetDomainComputer with PowerShell,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1018
+偵察,T1018,GetDomainComputer with PowerShell Script Block,TTP,windows,A,ART,Powershell Script Block Logging 4104,T1018
+偵察,T1018,GetDomainController with PowerShell Script Block,TTP,windows,A,ART,Powershell Script Block Logging 4104,T1018
+偵察,T1018,GetWmiObject Ds Computer with PowerShell,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1018
+偵察,T1018,GetWmiObject Ds Computer with PowerShell Script Block,TTP,windows,A,ART,Powershell Script Block Logging 4104,T1018
+偵察,T1018,Remote System Discovery with Adsisearcher,TTP,windows,A,ART,Powershell Script Block Logging 4104,T1018
+偵察,T1018,Remote System Discovery with Wmic,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1018
+偵察,T1018,Windows AdFind Exe,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1018
+偵察,T1018,Windows Get-AdComputer Unconstrained Delegation Discovery,TTP,windows,A,ART,Powershell Script Block Logging 4104,T1018
+偵察,T1018,Windows PowerView Constrained Delegation Discovery,TTP,windows,A,ART,Powershell Script Block Logging 4104,T1018
+偵察,T1018,Windows PowerView Unconstrained Delegation Discovery,TTP,windows,A,ART,Powershell Script Block Logging 4104,T1018
+偵察,T1033,Linux Auditd Whoami User Discovery,Anomaly,linux,A,Caldera,Linux Auditd Syscall,T1033
+偵察,T1033,System User Discovery With Whoami,Anomaly,windows,A,Caldera,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1033
+偵察,T1033,Windows System Discovery Using ldap Nslookup,Anomaly,windows,A,Caldera,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1033
+偵察,T1033,Windows System Remote Discovery With Query,Anomaly,windows,A,Caldera,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1033
+偵察,T1033,Check Elevated CMD using whoami,TTP,windows,A,Caldera,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1033
+偵察,"T1046,T1018",Windows PsTools Recon Usage,Anomaly,windows,A,ART/手動,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,"T1082,T1046,T1018"
+偵察,"T1046,T1135",Advanced IP or Port Scanner Execution,Anomaly,windows,A,ART/手動,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,"T1046,T1135"
+偵察,T1069.001,Windows Admin Permission Discovery,Anomaly,windows,A,ART,Sysmon EventID 11,T1069.001
+偵察,T1069.001,Wmic Group Discovery,Anomaly,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1069.001
+偵察,"T1069.001,T1069.002,T1087.001,T1087.002,T1482",Detect AzureHound Command-Line Arguments,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,"T1069.001,T1069.002,T1087.001,T1087.002,T1482"
+偵察,"T1069.001,T1069.002,T1087.001,T1087.002,T1482",Detect AzureHound File Modifications,TTP,windows,A,ART,Sysmon EventID 11,"T1069.001,T1069.002,T1087.001,T1087.002,T1482"
+偵察,"T1069.001,T1069.002,T1087.001,T1087.002,T1482",Detect SharpHound Command-Line Arguments,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,"T1069.001,T1069.002,T1087.001,T1087.002,T1482"
+偵察,"T1069.001,T1069.002,T1087.001,T1087.002,T1482",Detect SharpHound File Modifications,TTP,windows,A,ART,Sysmon EventID 11,"T1069.001,T1069.002,T1087.001,T1087.002,T1482"
+偵察,"T1069.001,T1069.002,T1087.001,T1087.002,T1482",Detect SharpHound Usage,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,"T1069.001,T1069.002,T1087.001,T1087.002,T1482"
+偵察,"T1069.001,T1069.002,T1087.001,T1087.002,T1482",Windows SOAPHound Binary Execution,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,"T1069.001,T1069.002,T1087.001,T1087.002,T1482"
+偵察,T1069.002,Domain Group Discovery With Dsquery,Anomaly,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1069.002
+偵察,T1069.002,Windows Sensitive Group Discovery With Net,Anomaly,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1069.002
+偵察,T1069.002,Domain Group Discovery with Adsisearcher,TTP,windows,A,ART,Powershell Script Block Logging 4104,T1069.002
+偵察,T1069.002,Elevated Group Discovery With Wmic,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1069.002
+偵察,T1069.002,GetDomainGroup with PowerShell,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1069.002
+偵察,T1069.002,GetDomainGroup with PowerShell Script Block,TTP,windows,A,ART,Powershell Script Block Logging 4104,T1069.002
+偵察,T1069.002,GetWmiObject Ds Group with PowerShell,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1069.002
+偵察,T1069.002,GetWmiObject Ds Group with PowerShell Script Block,TTP,windows,A,ART,Powershell Script Block Logging 4104,T1069.002
+偵察,T1087.002,Domain Account Discovery with Dsquery,Anomaly,windows,A,ART/Caldera,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1087.002
+偵察,T1087.002,SchCache Change By App Connect And Create ADSI Object,Anomaly,windows,A,ART/Caldera,Sysmon EventID 11,T1087.002
+偵察,T1087.002,Windows AD Abnormal Object Access Activity,Anomaly,windows,A,ART/Caldera,Windows Event Log Security 4662,T1087.002
+偵察,T1087.002,Windows Domain Account Discovery Via Get-NetComputer,Anomaly,windows,A,ART/Caldera,Powershell Script Block Logging 4104,T1087.002
+偵察,T1087.002,Windows Linked Policies In ADSI Discovery,Anomaly,windows,A,ART/Caldera,Powershell Script Block Logging 4104,T1087.002
+偵察,T1087.002,Windows Root Domain linked policies Discovery,Anomaly,windows,A,ART/Caldera,Powershell Script Block Logging 4104,T1087.002
+偵察,T1087.002,Windows Suspect Process With Authentication Traffic,Anomaly,windows,A,ART/Caldera,Sysmon EventID 3,"T1087.002,T1204.002"
+偵察,T1087.002,AdsiSearcher Account Discovery,TTP,windows,A,ART/Caldera,Powershell Script Block Logging 4104,T1087.002
+偵察,T1087.002,Domain Account Discovery with Wmic,TTP,windows,A,ART/Caldera,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1087.002
+偵察,T1087.002,Get DomainUser with PowerShell,TTP,windows,A,ART/Caldera,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1087.002
+偵察,T1087.002,Get DomainUser with PowerShell Script Block,TTP,windows,A,ART/Caldera,Powershell Script Block Logging 4104,T1087.002
+偵察,T1087.002,GetWmiObject DS User with PowerShell,TTP,windows,A,ART/Caldera,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1087.002
+偵察,T1087.002,GetWmiObject DS User with PowerShell Script Block,TTP,windows,A,ART/Caldera,Powershell Script Block Logging 4104,T1087.002
+偵察,T1087.002,Windows AD Privileged Object Access Activity,TTP,windows,A,ART/Caldera,Windows Event Log Security 4662,T1087.002
+偵察,T1087.002,Windows Find Domain Organizational Units with GetDomainOU,TTP,windows,A,ART/Caldera,Powershell Script Block Logging 4104,T1087.002
+偵察,T1087.002,Windows Find Interesting ACL with FindInterestingDomainAcl,TTP,windows,A,ART/Caldera,Powershell Script Block Logging 4104,T1087.002
+偵察,T1087.002,Windows Forest Discovery with GetForestDomain,TTP,windows,A,ART/Caldera,Powershell Script Block Logging 4104,T1087.002
+偵察,T1087.002,Windows Get Local Admin with FindLocalAdminAccess,TTP,windows,A,ART/Caldera,Powershell Script Block Logging 4104,T1087.002
+偵察,T1135,Windows Large Number of Computer Service Tickets Requested,Anomaly,windows,A,Caldera,Windows Event Log Security 4769,"T1135,T1078"
+偵察,T1135,Windows Network Share Interaction Via Net,Anomaly,windows,A,Caldera,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,"T1135,T1039"
+偵察,T1135,Windows Administrative Shares Accessed On Multiple Hosts,TTP,windows,A,Caldera,Windows Event Log Security 5140 | Windows Event Log Security 5145,T1135
+偵察,T1135,Windows File Share Discovery With Powerview,TTP,windows,A,Caldera,Powershell Script Block Logging 4104,T1135
+偵察,T1482,DSQuery Domain Discovery,TTP,windows,A,ART/Caldera,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1482
+偵察,T1482,Get-DomainTrust with PowerShell,TTP,windows,A,ART/Caldera,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1482
+偵察,T1482,Get-DomainTrust with PowerShell Script Block,TTP,windows,A,ART/Caldera,Powershell Script Block Logging 4104,T1482
+偵察,T1482,Get-ForestTrust with PowerShell,TTP,windows,A,ART/Caldera,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1482
+偵察,T1482,NLTest Domain Trust Discovery,TTP,windows,A,ART/Caldera,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1482
+偵察,"T1482,T1059.001",Get-ForestTrust with PowerShell Script Block,TTP,windows,A,ART/Caldera,Powershell Script Block Logging 4104,"T1482,T1059.001"
+回避,T1027,Linux Obfuscated Files or Information Base64 Decode,Anomaly,linux,A,Caldera(base64),Sysmon for Linux EventID 1,T1027
+回避,T1027,Linux Decode Base64 to Shell,TTP,linux,A,Caldera(base64),Sysmon for Linux EventID 1,"T1027,T1059.004"
+回避,T1027,Wermgr Process Create Executable File,TTP,windows,A,Caldera(base64),Sysmon EventID 11,T1027
+回避,T1027,Windows Snake Malware File Modification Crmlog,TTP,windows,A,Caldera(base64),Sysmon EventID 11,T1027
+回避,"T1027,T1059.001",Powershell Fileless Script Contains Base64 Encoded Content,TTP,windows,A,Caldera(base64),Powershell Script Block Logging 4104,"T1027,T1059.001"
+回避,T1036.005,Windows Process Execution From ProgramData,Anomaly,windows,A,Caldera,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1036.005
+回避,T1036.005,Windows Process Execution in Temp Dir,Anomaly,windows,A,Caldera,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,"T1543,T1036.005"
+回避,T1036.005,Attacker Tools On Endpoint,TTP,windows,A,Caldera,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2 | Cisco Network Visibility Module Flow Data,"T1003,T1036.005,T1595"
+回避,T1036.005,Windows MSC EvilTwin Directory Path Manipulation,TTP,windows,A,Caldera,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,"T1218,T1036.005,T1203"
+回避,T1036.005,Windows Suspicious Process File Path,TTP,windows,A,Caldera,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,"T1543,T1036.005"
+回避,"T1036.005,T1218.011",Windows LOLBAS Executed Outside Expected Path,TTP,windows,A,Caldera,Sysmon EventID 1 | Windows Event Log Security 4688,"T1036.005,T1218.011"
+回避,T1070.001,Windows Eventlog Cleared Via Wevtutil,Anomaly,windows,C,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1070.001
+回避,T1070.001,Disable Logs Using WevtUtil,TTP,windows,C,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1070.001
+回避,T1070.001,Suspicious wevtutil Usage,TTP,windows,C,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1070.001
+回避,T1070.001,Windows Event Log Cleared,TTP,windows,C,ART,Windows Event Log Security 1102 | Windows Event Log System 104,T1070.001
+回避,T1218.005,Detect MSHTA Url in Command Line,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2 | Cisco Network Visibility Module Flow Data,T1218.005
+回避,T1218.005,Detect Rundll32 Inline HTA Execution,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1218.005
+回避,T1218.005,Detect mshta inline hta execution,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1218.005
+回避,T1218.005,Mshta spawning Rundll32 OR Regsvr32 Process,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1218.005
+回避,T1218.005,Suspicious mshta child process,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1218.005
+回避,T1218.005,Suspicious mshta spawn,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1218.005
+回避,T1218.005,Windows MSHTA Writing to World Writable Path,TTP,windows,A,ART,Sysmon EventID 11,T1218.005
+回避,T1218.005,Windows Mshta Execution In Registry,TTP,windows,A,ART,Sysmon EventID 13,T1218.005
+回避,T1218.011,Rundll32 LockWorkStation,Anomaly,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1218.011
+回避,T1218.011,Windows Rundll32 Apply User Settings Changes,Anomaly,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1218.011
+回避,T1218.011,Windows Rundll32 Load DLL in Temp Dir,Anomaly,windows,A,ART,Sysmon EventID 1,T1218.011
+回避,T1218.011,RunDLL Loading DLL By Ordinal,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1218.011
+回避,T1218.011,Rundll32 Control RunDLL World Writable Directory,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1218.011
+回避,T1218.011,Rundll32 DNSQuery,TTP,windows,A,ART,Sysmon EventID 22,T1218.011
+回避,T1218.011,Rundll32 Process Creating Exe Dll Files,TTP,windows,A,ART,Sysmon EventID 11,T1218.011
+回避,T1218.011,Rundll32 with no Command Line Arguments with Network,TTP,windows,A,ART,Sysmon EventID 1 AND Sysmon EventID 3,T1218.011
+回避,T1218.011,Suspicious IcedID Rundll32 Cmdline,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1218.011
+回避,T1218.011,Suspicious Rundll32 PluginInit,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1218.011
+回避,T1218.011,Suspicious Rundll32 StartW,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1218.011
+回避,T1218.011,Suspicious Rundll32 dllregisterserver,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1218.011
+回避,T1218.011,Suspicious Rundll32 no Command Line Arguments,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1218.011
+回避,T1218.011,Windows Application Whitelisting Bypass Attempt via Rundll32,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1218.011
+回避,T1218.011,Windows LOLBAS Executed As Renamed File,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,"T1036.003,T1218.011"
+回避,T1562.001,Disable Show Hidden Files,Anomaly,windows,A,ART,Sysmon EventID 13,"T1112,T1562.001,T1564.001"
+回避,T1562.001,Disabling Firewall with Netsh,Anomaly,windows,C,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1562.001
+回避,T1562.001,Excessive Usage Of Taskkill,Anomaly,windows,C,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1562.001
+回避,T1562.001,Excessive number of service control start as disabled,Anomaly,windows,C,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1562.001
+回避,T1562.001,Windows Cisco Secure Endpoint Stop Immunet Service Via Sfc,Anomaly,windows,C,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1562.001
+回避,T1562.001,Windows Cisco Secure Endpoint Unblock File Via Sfc,Anomaly,windows,C,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1562.001
+回避,T1562.001,Windows Cisco Secure Endpoint Uninstall Immunet Service Via Sfc,Anomaly,windows,C,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1562.001
+回避,T1562.001,Windows Disable or Modify Tools Via Taskkill,Anomaly,windows,C,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1562.001
+回避,T1562.001,Windows Impair Defense Delete Win Defender Profile Registry,Anomaly,windows,C,ART,Sysmon EventID 13,T1562.001
+回避,T1562.001,Windows Impair Defenses Disable Auto Logger Session,Anomaly,windows,C,ART,Sysmon EventID 13,T1562.001
+回避,T1562.001,Windows Impair Defenses Disable Win Defender Auto Logging,Anomaly,windows,C,ART,Sysmon EventID 13,T1562.001
+回避,T1562.001,Windows Terminating Lsass Process,Anomaly,windows,C,ART,Sysmon EventID 10,T1562.001
+回避,T1562.001,Add or Set Windows Defender Exclusion,TTP,windows,C,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1562.001
+回避,T1562.001,Disable AMSI Through Registry,TTP,windows,C,ART,Sysmon EventID 13,T1562.001
+回避,T1562.001,Disable Defender AntiVirus Registry,TTP,windows,C,ART,Sysmon EventID 13,T1562.001
+回避,T1562.001,Disable Defender BlockAtFirstSeen Feature,TTP,windows,C,ART,Sysmon EventID 13,T1562.001
+回避,T1562.001,Disable Defender Enhanced Notification,TTP,windows,C,ART,Sysmon EventID 13,T1562.001
+回避,T1562.001,Disable Defender MpEngine Registry,TTP,windows,C,ART,Sysmon EventID 13,T1562.001
+回避,T1562.001,Disable Defender Spynet Reporting,TTP,windows,C,ART,Sysmon EventID 13,T1562.001
+回避,T1562.001,Disable Defender Submit Samples Consent Feature,TTP,windows,C,ART,Sysmon EventID 13,T1562.001
+回避,T1562.001,Disable ETW Through Registry,TTP,windows,C,ART,Sysmon EventID 13,T1562.001
+回避,T1562.001,Disable Registry Tool,TTP,windows,A,ART,Sysmon EventID 13,"T1112,T1562.001"
+回避,T1562.001,Disable Schedule Task,TTP,windows,C,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1562.001
+回避,T1562.001,Disable Windows App Hotkeys,TTP,windows,A,ART,Sysmon EventID 13,"T1112,T1562.001"
+回避,T1562.001,Disable Windows Behavior Monitoring,TTP,windows,C,ART,Sysmon EventID 13,T1562.001
+回避,T1562.001,Disable Windows SmartScreen Protection,TTP,windows,C,ART,Sysmon EventID 13,T1562.001
+回避,T1562.001,Disabling CMD Application,TTP,windows,A,ART,Sysmon EventID 13,"T1112,T1562.001"
+回避,T1562.001,Disabling ControlPanel,TTP,windows,A,ART,Sysmon EventID 13,"T1112,T1562.001"
+回避,T1562.001,Disabling Defender Services,TTP,windows,C,ART,Sysmon EventID 13,T1562.001
+回避,T1562.001,Disabling FolderOptions Windows Feature,TTP,windows,C,ART,Sysmon EventID 13,T1562.001
+回避,T1562.001,Disabling NoRun Windows App,TTP,windows,A,ART,Sysmon EventID 13,"T1112,T1562.001"
+回避,T1562.001,Disabling Task Manager,TTP,windows,C,ART,Sysmon EventID 13,T1562.001
+回避,T1562.001,Hide User Account From Sign-In Screen,TTP,windows,C,ART,Sysmon EventID 13,T1562.001
+回避,T1562.001,Powershell Disable Security Monitoring,TTP,windows,C,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1562.001
+回避,T1562.001,Powershell Remove Windows Defender Directory,TTP,windows,C,ART,Powershell Script Block Logging 4104,T1562.001
+回避,T1562.001,Powershell Windows Defender Exclusion Commands,TTP,windows,C,ART,Powershell Script Block Logging 4104,T1562.001
+回避,T1562.001,Process Kill Base On File Path,TTP,windows,C,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1562.001
+回避,T1562.001,Unload Sysmon Filter Driver,TTP,windows,C,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1562.001
+回避,T1562.001,Windows AD Domain Controller Audit Policy Disabled,TTP,windows,C,ART,Windows Event Log Security 4719,T1562.001
+回避,T1562.001,Windows Attempt To Stop Security Service,TTP,windows,C,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1562.001
+回避,T1562.001,Windows DISM Remove Defender,TTP,windows,C,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1562.001
+回避,T1562.001,Windows Defender ASR or Threat Configuration Tamper,TTP,windows,C,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1562.001
+回避,T1562.001,Windows Defender Exclusion Registry Entry,TTP,windows,C,ART,Sysmon EventID 13,T1562.001
+回避,T1562.001,Windows Disable or Stop Browser Process,TTP,windows,C,ART,Sysmon EventID 1,T1562.001
+回避,T1562.001,Windows DisableAntiSpyware Registry,TTP,windows,C,ART,Sysmon EventID 13,T1562.001
+回避,T1562.001,Windows Excessive Disabled Services Event,TTP,windows,C,ART,Windows Event Log System 7040,T1562.001
+回避,T1562.001,Windows Impair Defense Change Win Defender Health Check Intervals,TTP,windows,C,ART,Sysmon EventID 13,T1562.001
+回避,T1562.001,Windows Impair Defense Change Win Defender Quick Scan Interval,TTP,windows,C,ART,Sysmon EventID 13,T1562.001
+回避,T1562.001,Windows Impair Defense Change Win Defender Throttle Rate,TTP,windows,C,ART,Sysmon EventID 13,T1562.001
+回避,T1562.001,Windows Impair Defense Change Win Defender Tracing Level,TTP,windows,C,ART,Sysmon EventID 13,T1562.001
+回避,T1562.001,Windows Impair Defense Configure App Install Control,TTP,windows,C,ART,Sysmon EventID 13,T1562.001
+回避,T1562.001,Windows Impair Defense Define Win Defender Threat Action,TTP,windows,C,ART,Sysmon EventID 13,T1562.001
+回避,T1562.001,Windows Impair Defense Deny Security Software With Applocker,TTP,windows,C,ART,Sysmon EventID 13,T1562.001
+回避,T1562.001,Windows Impair Defense Disable Controlled Folder Access,TTP,windows,C,ART,Sysmon EventID 13,T1562.001
+回避,T1562.001,Windows Impair Defense Disable Defender Firewall And Network,TTP,windows,C,ART,Sysmon EventID 13,T1562.001
+回避,T1562.001,Windows Impair Defense Disable Defender Protocol Recognition,TTP,windows,C,ART,Sysmon EventID 13,T1562.001
+回避,T1562.001,Windows Impair Defense Disable PUA Protection,TTP,windows,C,ART,Sysmon EventID 13,T1562.001
+回避,T1562.001,Windows Impair Defense Disable Realtime Signature Delivery,TTP,windows,C,ART,Sysmon EventID 13,T1562.001
+回避,T1562.001,Windows Impair Defense Disable Web Evaluation,TTP,windows,C,ART,Sysmon EventID 13,T1562.001
+回避,T1562.001,Windows Impair Defense Disable Win Defender App Guard,TTP,windows,C,ART,Sysmon EventID 13,T1562.001
+回避,T1562.001,Windows Impair Defense Disable Win Defender Compute File Hashes,TTP,windows,C,ART,Sysmon EventID 13,T1562.001
+回避,T1562.001,Windows Impair Defense Disable Win Defender Gen reports,TTP,windows,C,ART,Sysmon EventID 13,T1562.001
+回避,T1562.001,Windows Impair Defense Disable Win Defender Network Protection,TTP,windows,C,ART,Sysmon EventID 13,T1562.001
+回避,T1562.001,Windows Impair Defense Disable Win Defender Report Infection,TTP,windows,C,ART,Sysmon EventID 13,T1562.001
+回避,T1562.001,Windows Impair Defense Disable Win Defender Scan On Update,TTP,windows,C,ART,Sysmon EventID 13,T1562.001
+回避,T1562.001,Windows Impair Defense Disable Win Defender Signature Retirement,TTP,windows,C,ART,Sysmon EventID 13,T1562.001
+回避,T1562.001,Windows Impair Defense Overide Win Defender Phishing Filter,TTP,windows,C,ART,Sysmon EventID 13,T1562.001
+回避,T1562.001,Windows Impair Defense Override SmartScreen Prompt,TTP,windows,C,ART,Sysmon EventID 13,T1562.001
+回避,T1562.001,Windows Impair Defense Set Win Defender Smart Screen Level To Warn,TTP,windows,C,ART,Sysmon EventID 13,T1562.001
+回避,T1562.001,Windows Impair Defenses Disable HVCI,TTP,windows,C,ART,Sysmon EventID 13,T1562.001
+回避,T1562.001,Windows Important Audit Policy Disabled,TTP,windows,C,ART,Windows Event Log Security 4719,T1562.001
+回避,T1562.001,Windows Raccine Scheduled Task Deletion,TTP,windows,C,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1562.001
+実行,T1059.001,Malicious PowerShell Process - Execution Policy Bypass,Anomaly,windows,A,ART/Caldera,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1059.001
+実行,T1059.001,PowerShell Enable PowerShell Remoting,Anomaly,windows,A,ART/Caldera,Powershell Script Block Logging 4104,T1059.001
+実行,T1059.001,PowerShell Loading DotNET into Memory via Reflection,Anomaly,windows,A,ART/Caldera,Powershell Script Block Logging 4104,T1059.001
+実行,T1059.001,PowerShell Start or Stop Service,Anomaly,windows,A,ART/Caldera,Powershell Script Block Logging 4104,T1059.001
+実行,T1059.001,Recon Using WMI Class,Anomaly,windows,A,ART/Caldera,Powershell Script Block Logging 4104,"T1592,T1059.001"
+実行,T1059.001,Windows Account Access Removal via Logoff Exec,Anomaly,windows,A,ART/Caldera,Sysmon EventID 1,"T1059.001,T1531"
+実行,T1059.001,Windows PowerShell Get CIMInstance Remote Computer,Anomaly,windows,A,ART/Caldera,Powershell Script Block Logging 4104,T1059.001
+実行,T1059.001,Windows PowerShell Process Implementing Manual Base64 Decoder,Anomaly,windows,A,ART/Caldera,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,"T1027.010,T1059.001"
+実行,T1059.001,Windows Powershell Cryptography Namespace,Anomaly,windows,A,ART/Caldera,Powershell Script Block Logging 4104,T1059.001
+実行,T1059.001,Windows Powershell Logoff User via Quser,Anomaly,windows,A,ART/Caldera,Powershell Script Block Logging 4104,"T1059.001,T1531"
+実行,T1059.001,Windows Powershell RemoteSigned File,Anomaly,windows,A,ART/Caldera,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1059.001
+実行,T1059.001,Detect Certify With PowerShell Script Block Logging,TTP,windows,A,ART/Caldera,Powershell Script Block Logging 4104,"T1059.001,T1649"
+実行,T1059.001,Detect Empire with PowerShell Script Block Logging,TTP,windows,A,ART/Caldera,Powershell Script Block Logging 4104,T1059.001
+実行,T1059.001,Detect Mimikatz With PowerShell Script Block Logging,TTP,windows,A,ART/Caldera,Powershell Script Block Logging 4104,"T1003,T1059.001"
+実行,T1059.001,Exchange PowerShell Module Usage,TTP,windows,A,ART/Caldera,Powershell Script Block Logging 4104,T1059.001
+実行,T1059.001,Malicious PowerShell Process With Obfuscation Techniques,TTP,windows,A,ART/Caldera,Sysmon EventID 1,T1059.001
+実行,T1059.001,Nishang PowershellTCPOneLine,TTP,windows,A,ART/Caldera,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1059.001
+実行,T1059.001,PowerShell Domain Enumeration,TTP,windows,A,ART/Caldera,Powershell Script Block Logging 4104,T1059.001
+実行,T1059.001,Powershell COM Hijacking InprocServer32 Modification,TTP,windows,A,ART/Caldera,Powershell Script Block Logging 4104,"T1059.001,T1546.015"
+実行,T1059.001,Powershell Creating Thread Mutex,TTP,windows,A,ART/Caldera,Powershell Script Block Logging 4104,"T1027.005,T1059.001"
+実行,T1059.001,Powershell Execute COM Object,TTP,windows,A,ART/Caldera,Powershell Script Block Logging 4104,"T1059.001,T1546.015"
+実行,T1059.001,Powershell Fileless Process Injection via GetProcAddress,TTP,windows,A,ART/Caldera,Powershell Script Block Logging 4104,"T1055,T1059.001"
+実行,T1059.001,Powershell Load Module in Meterpreter,TTP,windows,A,ART/Caldera,Powershell Script Block Logging 4104,T1059.001
+実行,T1059.001,Powershell Processing Stream Of Data,TTP,windows,A,ART/Caldera,Powershell Script Block Logging 4104,T1059.001
+実行,T1059.001,Powershell Using memory As Backing Store,TTP,windows,A,ART/Caldera,Powershell Script Block Logging 4104,T1059.001
+実行,T1059.001,Set Default PowerShell Execution Policy To Unrestricted or Bypass,TTP,windows,A,ART/Caldera,Sysmon EventID 13,T1059.001
+実行,T1059.001,Unloading AMSI via Reflection,TTP,windows,A,ART/Caldera,Powershell Script Block Logging 4104,"T1059.001,T1562"
+実行,T1059.001,Windows Enable PowerShell Web Access,TTP,windows,A,ART/Caldera,Powershell Script Block Logging 4104,T1059.001
+実行,T1059.001,Windows Explorer LNK Exploit Process Launch With Padding,TTP,windows,A,ART/Caldera,Sysmon EventID 1 | Windows Event Log Security 4688,"T1059.001,T1204.002"
+実行,T1059.001,Windows PowerShell Process With Malicious String,TTP,windows,A,ART/Caldera,Windows Event Log Security 4688 | Sysmon EventID 1 | CrowdStrike ProcessRollup2,T1059.001
+実行,T1059.001,Windows PowerShell Script Block With Malicious String,TTP,windows,A,ART/Caldera,Powershell Script Block Logging 4104,T1059.001
+実行,T1059.001,Windows PowerShell Script From WindowsApps Directory,TTP,windows,A,ART/Caldera,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,"T1059.001,T1204.002"
+実行,T1059.001,Windows PowerShell WMI Win32 ScheduledJob,TTP,windows,A,ART/Caldera,Powershell Script Block Logging 4104,T1059.001
+実行,"T1059.001,T1059.003",Windows PowerShell FakeCAPTCHA Clipboard Execution,TTP,windows,A,ART/Caldera,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2 | Cisco Network Visibility Module Flow Data,"T1059.001,T1204.001,T1059.003"
+実行,"T1059.001,T1059.003",Windows Shell Process from CrushFTP,TTP,windows,A,ART/Caldera,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,"T1059.001,T1059.003,T1190,T1505"
+実行,"T1059.001,T1105",Windows File Download Via PowerShell,Anomaly,windows,A,ART/Caldera,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2 | Cisco Network Visibility Module Flow Data,"T1059.001,T1105"
+実行,"T1059.001,T1105",Windows SSH Proxy Command,Anomaly,windows,A,ART/Caldera,Sysmon EventID 1 | Windows Event Log Security 4688,"T1572,T1059.001,T1105"
+実行,"T1059.001,T1105",PowerShell Script Block With URL Chain,TTP,windows,A,ART/Caldera,Powershell Script Block Logging 4104,"T1059.001,T1105"
+実行,"T1059.001,T1105",PowerShell WebRequest Using Memory Stream,TTP,windows,A,ART/Caldera,Powershell Script Block Logging 4104,"T1059.001,T1105,T1027.011"
+実行,"T1059.001,T1547.001",Windows PowerShell MSIX Package Installation,TTP,windows,A,ART/Caldera,Powershell Script Block Logging 4104,"T1059.001,T1547.001"
+実行,"T1059.001,T1562.001",Windows Powershell Import Applocker Policy,TTP,windows,A,ART/Caldera,Powershell Script Block Logging 4104,"T1059.001,T1562.001"
+実行,T1059.003,Potentially malicious code on commandline,Anomaly,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1059.003
+実行,T1059.003,Detect Use of cmd exe to Launch Script Interpreters,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1059.003
+実行,T1059.003,Ryuk Wake on LAN Command,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1059.003
+実行,T1059.003,Windows Command Shell DCRat ForkBomb Payload,TTP,windows,A,ART,Sysmon EventID 1 | CrowdStrike ProcessRollup2,T1059.003
+実行,"T1059.003,T1070.003",Windows Powershell History File Deletion,Anomaly,windows,A,ART,Powershell Script Block Logging 4104,"T1059.003,T1070.003"
+実行,"T1059.003,T1543.003",CMD Echo Pipe - Escalation,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,"T1059.003,T1543.003"
+横展開,T1021.001,Windows Default RDP File Creation By Non MSTSC Process,Anomaly,windows,A,手動(RDP),Sysmon EventID 1 AND Sysmon EventID 11,T1021.001
+横展開,T1021.001,Windows Default Rdp File Unhidden,Anomaly,windows,A,手動(RDP),Sysmon EventID 1,T1021.001
+横展開,T1021.001,Windows MSTSC RDP Commandline,Anomaly,windows,A,手動(RDP),Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1021.001
+横展開,T1021.001,Windows RDP Bitmap Cache File Creation,Anomaly,windows,A,手動(RDP),Sysmon EventID 11,T1021.001
+横展開,T1021.001,Windows RDP Client Launched with Admin Session,Anomaly,windows,A,手動(RDP),Sysmon EventID 1,T1021.001
+横展開,T1021.001,Windows RDP Login Session Was Established,Anomaly,windows,A,手動(RDP),Windows Event Log Security 4624,T1021.001
+横展開,T1021.001,Windows RDP Server Registry Entry Created,Anomaly,windows,A,手動(RDP),Sysmon EventID 13,T1021.001
+横展開,T1021.001,Windows Remote Services Allow Rdp In Firewall,Anomaly,windows,A,手動(RDP),Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1021.001
+横展開,T1021.001,Windows Remote Services Allow Remote Assistance,Anomaly,windows,A,手動(RDP),Sysmon EventID 13,T1021.001
+横展開,T1021.001,Allow Inbound Traffic By Firewall Rule Registry,TTP,windows,A,手動(RDP),Sysmon EventID 13,T1021.001
+横展開,T1021.001,Allow Inbound Traffic In Firewall Rule,TTP,windows,A,手動(RDP),Powershell Script Block Logging 4104,T1021.001
+横展開,T1021.001,Windows RDP File Execution,TTP,windows,A,手動(RDP),Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,"T1598.002,T1021.001"
+横展開,T1021.001,Windows Remote Service Rdpwinst Tool Execution,TTP,windows,A,手動(RDP),Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1021.001
+横展開,T1021.001,Windows Remote Services Rdp Enable,TTP,windows,A,手動(RDP),Sysmon EventID 13,T1021.001
+横展開,"T1021.001,T1105",Windows Process Execution From RDP Share,Anomaly,windows,A,手動(RDP),Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,"T1021.001,T1105,T1059"
+横展開,T1021.002,Detect PsExec With accepteula Flag,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1021.002
+横展開,T1021.002,Executable File Written in Administrative SMB Share,TTP,windows,A,ART,Windows Event Log Security 5145,T1021.002
+横展開,"T1021.002,T1047,T1543.003",Impacket Lateral Movement Commandline Parameters,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,"T1021.002,T1021.003,T1047,T1543.003"
+横展開,"T1021.002,T1047,T1543.003",Impacket Lateral Movement WMIExec Commandline Parameters,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,"T1021.002,T1021.003,T1047,T1543.003"
+横展開,"T1021.002,T1047,T1543.003",Impacket Lateral Movement smbexec CommandLine Parameters,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,"T1021.002,T1021.003,T1047,T1543.003"
+横展開,"T1021.002,T1135",Windows Special Privileged Logon On Multiple Hosts,TTP,windows,A,ART,Windows Event Log Security 4672,"T1087,T1021.002,T1135"
+横展開,T1021.006,Windows Remote Host Computer Management Access,Anomaly,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688,T1021.006
+横展開,T1021.006,Windows Remote Management Execute Shell,Anomaly,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688,T1021.006
+横展開,T1021.006,Interactive Session on Remote Endpoint with PowerShell,TTP,windows,A,ART,Powershell Script Block Logging 4104,T1021.006
+横展開,T1021.006,Powershell Remote Services Add TrustedHost,TTP,windows,A,ART,Powershell Script Block Logging 4104,T1021.006
+横展開,T1021.006,Remote Process Instantiation via WinRM and PowerShell,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1021.006
+横展開,T1021.006,Remote Process Instantiation via WinRM and PowerShell Script Block,TTP,windows,A,ART,Powershell Script Block Logging 4104,T1021.006
+横展開,T1021.006,Remote Process Instantiation via WinRM and Winrs,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1021.006
+横展開,T1021.006,Wsmprovhost LOLBAS Execution Process Spawn,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1021.006
+横展開,"T1021.006,T1047,T1053.005,T1059.001,T1543.003",Possible Lateral Movement PowerShell Spawn,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,"T1021.003,T1021.006,T1047,T1053.005,T1059.001,T1218.014,T1543.003"
+横展開,T1047,PowerShell Invoke CIMMethod CIMSession,Anomaly,windows,A,ART,Powershell Script Block Logging 4104,T1047
+横展開,T1047,Windows WMI Impersonate Token,Anomaly,windows,A,ART,Sysmon EventID 10,T1047
+横展開,T1047,Windows WMI Process And Service List,Anomaly,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1047
+横展開,T1047,PowerShell Invoke WmiExec Usage,TTP,windows,A,ART,Powershell Script Block Logging 4104,T1047
+横展開,T1047,Process Execution via WMI,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1047
+横展開,T1047,Remote Process Instantiation via WMI,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1047
+横展開,T1047,Remote Process Instantiation via WMI and PowerShell,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1047
+横展開,T1047,Remote Process Instantiation via WMI and PowerShell Script Block,TTP,windows,A,ART,Powershell Script Block Logging 4104,T1047
+横展開,T1047,Remote WMI Command Attempt,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1047
+横展開,T1047,Script Execution via WMI,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1047
+横展開,T1047,Wmiprvse LOLBAS Execution Process Spawn,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1047
+永続化,T1053.005,Suspicious Scheduled Task from Public Directory,Anomaly,windows,A,ART/Caldera,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1053.005
+永続化,T1053.005,Windows Enable Win32 ScheduledJob via Registry,Anomaly,windows,A,ART/Caldera,Sysmon EventID 13,T1053.005
+永続化,T1053.005,Windows Registry Delete Task SD,Anomaly,windows,A,ART/Caldera,Sysmon EventID 13,"T1053.005,T1562"
+永続化,T1053.005,Windows Scheduled Task Created Via XML,Anomaly,windows,A,ART/Caldera,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1053.005
+永続化,T1053.005,Scheduled Task Deleted Or Created via CMD,TTP,windows,A,ART/Caldera,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1053.005
+永続化,T1053.005,Scheduled Task Initiation on Remote Endpoint,TTP,windows,A,ART/Caldera,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1053.005
+永続化,T1053.005,Schtasks scheduling job on remote system,TTP,windows,A,ART/Caldera,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1053.005
+永続化,T1053.005,Schtasks used for forcing a reboot,TTP,windows,A,ART/Caldera,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1053.005
+永続化,T1053.005,Short Lived Scheduled Task,TTP,windows,A,ART/Caldera,Windows Event Log Security 4698 | Windows Event Log Security 4699,T1053.005
+永続化,T1053.005,Svchost LOLBAS Execution Process Spawn,TTP,windows,A,ART/Caldera,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1053.005
+永続化,T1053.005,WinEvent Scheduled Task Created Within Public Path,TTP,windows,A,ART/Caldera,Windows Event Log Security 4698,T1053.005
+永続化,T1053.005,WinEvent Scheduled Task Created to Spawn Shell,TTP,windows,A,ART/Caldera,Windows Event Log Security 4698,T1053.005
+永続化,T1053.005,Windows Compatibility Telemetry Suspicious Child Process,TTP,windows,A,ART/Caldera,Windows Event Log Security 4688 | Sysmon EventID 1 | CrowdStrike ProcessRollup2,"T1546,T1053.005"
+永続化,T1053.005,Windows Compatibility Telemetry Tampering Through Registry,TTP,windows,A,ART/Caldera,Sysmon EventID 13,"T1546,T1053.005"
+永続化,T1053.005,Windows Scheduled Task Service Spawned Shell,TTP,windows,A,ART/Caldera,Sysmon EventID 1 | CrowdStrike ProcessRollup2,"T1053.005,T1059"
+永続化,T1053.005,Windows Scheduled Task with Highest Privileges,TTP,windows,A,ART/Caldera,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1053.005
+永続化,T1053.005,Windows Scheduled Task with Suspicious Command,TTP,windows,A,ART/Caldera,Windows Event Log Security 4698 | Windows Event Log Security 4700 | Windows Event Log Security 4702,T1053.005
+永続化,T1053.005,Windows Scheduled Task with Suspicious Name,TTP,windows,A,ART/Caldera,Windows Event Log Security 4698 | Windows Event Log Security 4700 | Windows Event Log Security 4702,T1053.005
+永続化,T1053.005,Windows Schtasks Create Run As System,TTP,windows,A,ART/Caldera,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1053.005
+永続化,"T1053.005,T1059.001",Windows PowerShell ScheduleTask,Anomaly,windows,A,ART/Caldera,Powershell Script Block Logging 4104,"T1053.005,T1059.001"
+永続化,T1098,Windows AD DSRM Account Changes,TTP,windows,A,ART(DC),Sysmon EventID 13,T1098
+永続化,T1098,Windows AD Privileged Group Modification,TTP,windows,A,ART(DC),Windows Event Log Security 4728,T1098
+永続化,T1098,Windows AD add Self to Group,TTP,windows,A,ART(DC),Windows Event Log Security 4728,T1098
+永続化,T1098,Windows DnsAdmins New Member Added,TTP,windows,A,ART(DC),Windows Event Log Security 4732,T1098
+永続化,T1098,Windows Increase in Group or Object Modification Activity,TTP,windows,A,ART(DC),Windows Event Log Security 4663,"T1098,T1562"
+永続化,T1098,Windows Increase in User Modification Activity,TTP,windows,A,ART(DC),Windows Event Log Security 4720,"T1098,T1562"
+永続化,T1098,Windows Multiple Account Passwords Changed,TTP,windows,A,ART(DC),Windows Event Log Security 4724,"T1098,T1078"
+永続化,T1098,Windows Multiple Accounts Deleted,TTP,windows,A,ART(DC),Windows Event Log Security 4726,"T1098,T1078"
+永続化,T1098,Windows Multiple Accounts Disabled,TTP,windows,A,ART(DC),Windows Event Log Security 4725,"T1098,T1078"
+永続化,T1136.001,Linux Auditd Add User Account,Anomaly,linux,A,ART/手動,Linux Auditd Proctitle,T1136.001
+永続化,T1136.001,Linux Auditd Add User Account Type,Anomaly,linux,A,ART/手動,Linux Auditd Add User,T1136.001
+永続化,T1136.001,Windows Create Local Account,Anomaly,windows,A,ART/手動,Windows Event Log Security 4720,T1136.001
+永続化,T1136.001,Windows Create Local Administrator Account Via Net,Anomaly,windows,A,ART/手動,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1136.001
+永続化,T1136.001,Detect New Local Admin account,TTP,windows,A,ART/手動,Windows Event Log Security 4732 | Windows Event Log Security 4720,T1136.001
+永続化,T1136.001,Short Lived Windows Accounts,TTP,windows,A,ART/手動,Windows Event Log System 4720 | Windows Event Log System 4726,"T1078.003,T1136.001"
+永続化,"T1136.001,T1136.002",Windows ESX Admins Group Creation Security Event,TTP,windows,A,ART/手動,Windows Event Log Security 4727 | Windows Event Log Security 4730 | Windows Event Log Security 4737,"T1136.001,T1136.002"
+永続化,"T1136.001,T1136.002",Windows Privileged Group Modification,TTP,windows,A,ART/手動,Windows Event Log Security 4727 | Windows Event Log Security 4731 | Windows Event Log Security 4744 | Windows Event Log Security 4749 | Windows Event Log Security 4754 | Windows Event Log Security 4759 | Windows Event Log Security 4783 | Windows Event Log Security 4790,"T1136.001,T1136.002"
+永続化,"T1136.002,T1136.001",Windows ESX Admins Group Creation via Net,TTP,windows,A,ART(DC),Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,"T1136.002,T1136.001"
+永続化,"T1136.002,T1136.001",Windows ESX Admins Group Creation via PowerShell,TTP,windows,A,ART(DC),Powershell Script Block Logging 4104,"T1136.002,T1136.001"
+永続化,T1543.003,Windows Remote Create Service,Anomaly,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1543.003
+永続化,T1543.003,Windows Service Create RemComSvc,Anomaly,windows,A,ART,Windows Event Log System 7045,T1543.003
+永続化,T1543.003,Sc exe Manipulating Windows Services,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1543.003
+永続化,T1543.003,Services LOLBAS Execution Process Spawn,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1543.003
+永続化,T1543.003,Windows KrbRelayUp Service Creation,TTP,windows,A,ART,Windows Event Log System 7045,T1543.003
+永続化,T1543.003,Windows Service Create Kernel Mode Driver,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,"T1068,T1543.003"
+永続化,T1543.003,Windows Service Create with Tscon,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,"T1543.003,T1563.002"
+永続化,T1543.003,Windows Service Creation on Remote Endpoint,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1543.003
+永続化,T1543.003,Windows Service Initiation on Remote Endpoint,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1543.003
+永続化,T1543.003,Windows Suspicious Driver Loaded Path,TTP,windows,A,ART,Sysmon EventID 6,T1543.003
+永続化,T1543.003,Windows Vulnerable Driver Installed,TTP,windows,A,ART,Windows Event Log System 7045,T1543.003
+永続化,T1543.003,XMRIG Driver Loaded,TTP,windows,A,ART,Sysmon EventID 6,T1543.003
+永続化,T1547.001,Windows Boot or Logon Autostart Execution In Startup Folder,Anomaly,windows,A,ART,Sysmon EventID 11,T1547.001
+永続化,T1547.001,Registry Keys Used For Persistence,TTP,windows,A,ART,Sysmon EventID 13,T1547.001
+永続化,T1547.001,Windows Registry BootExecute Modification,TTP,windows,A,ART,Sysmon EventID 13,"T1542,T1547.001"
+永続化,T1547.001,Windows Registry Modification for Safe Mode Persistence,TTP,windows,A,ART,Sysmon EventID 13,T1547.001
+認証情報,T1003.001,Access LSASS Memory for Dump Creation,TTP,windows,A,ART,Sysmon EventID 10,T1003.001
+認証情報,T1003.001,Create Remote Thread into LSASS,TTP,windows,A,ART,Sysmon EventID 8,T1003.001
+認証情報,T1003.001,Creation of lsass Dump with Taskmgr,TTP,windows,A,ART,Sysmon EventID 11,T1003.001
+認証情報,T1003.001,Detect Credential Dumping through LSASS access,TTP,windows,A,ART,Sysmon EventID 10,T1003.001
+認証情報,T1003.001,Dump LSASS via comsvcs DLL,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1003.001
+認証情報,T1003.001,Dump LSASS via procdump,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1003.001
+認証情報,T1003.001,Windows Credential Dumping LSASS Memory Createdump,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1003.001
+認証情報,T1003.001,Windows Non-System Account Targeting Lsass,TTP,windows,A,ART,Sysmon EventID 10,T1003.001
+認証情報,T1003.001,Windows Possible Credential Dumping,TTP,windows,A,ART,Sysmon EventID 10,T1003.001
+認証情報,T1003.002,Detect Copy of ShadowCopy with Script Block Logging,TTP,windows,A,ART,Powershell Script Block Logging 4104,T1003.002
+認証情報,T1003.002,Windows Rapid Authentication On Multiple Hosts,TTP,windows,A,ART,Windows Event Log Security 4624,T1003.002
+認証情報,T1003.002,Windows Sensitive Registry Hive Dump Via CommandLine,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1003.002
+認証情報,T1003.003,Creation of Shadow Copy,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1003.003
+認証情報,T1003.003,Creation of Shadow Copy with wmic and powershell,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1003.003
+認証情報,T1003.003,Credential Dumping via Copy Command from Shadow Copy,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1003.003
+認証情報,T1003.003,Credential Dumping via Symlink to Shadow Copy,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1003.003
+認証情報,T1003.003,Ntdsutil Export NTDS,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1003.003
+認証情報,T1003.003,SecretDumps Offline NTDS Dumping Tool,TTP,windows,A,ART,Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1003.003
+認証情報,T1003.006,Windows AD Replication Request Initiated by User Account,TTP,windows,A,ART(DC),Windows Event Log Security 4662 | Windows Event Log Security 4624,T1003.006
+認証情報,T1003.006,Windows AD Replication Request Initiated from Unsanctioned Location,TTP,windows,A,ART(DC),Windows Event Log Security 4662 | Windows Event Log Security 4624,T1003.006
+認証情報,T1110.001,Windows Remote Desktop Network Bruteforce Attempt,Anomaly,windows,A,手動,Sysmon EventID 3,T1110.001
+認証情報,T1110.003,Windows Unusual Count Of Disabled Users Failed Auth Using Kerberos,Anomaly,windows,A,ART/手動,Windows Event Log Security 4768,T1110.003
+認証情報,T1110.003,Windows Unusual Count Of Invalid Users Fail To Auth Using Kerberos,Anomaly,windows,A,ART/手動,Windows Event Log Security 4768,T1110.003
+認証情報,T1110.003,Windows Unusual Count Of Invalid Users Failed To Auth Using NTLM,Anomaly,windows,A,ART/手動,Windows Event Log Security 4776,T1110.003
+認証情報,T1110.003,Windows Unusual Count Of Users Fail To Auth Wth ExplicitCredentials,Anomaly,windows,A,ART/手動,Windows Event Log Security 4648,T1110.003
+認証情報,T1110.003,Windows Unusual Count Of Users Failed To Auth Using Kerberos,Anomaly,windows,A,ART/手動,Windows Event Log Security 4771,T1110.003
+認証情報,T1110.003,Windows Unusual Count Of Users Failed To Authenticate From Process,Anomaly,windows,A,ART/手動,Windows Event Log Security 4625,T1110.003
+認証情報,T1110.003,Windows Unusual Count Of Users Failed To Authenticate Using NTLM,Anomaly,windows,A,ART/手動,Windows Event Log Security 4776,T1110.003
+認証情報,T1110.003,Windows Unusual Count Of Users Remotely Failed To Auth From Host,Anomaly,windows,A,ART/手動,Windows Event Log Security 4625,T1110.003
+認証情報,T1110.003,Detect Password Spray Attack Behavior From Source,TTP,windows,A,ART/手動,Windows Event Log Security 4624 | Windows Event Log Security 4625,T1110.003
+認証情報,T1110.003,Detect Password Spray Attack Behavior On User,TTP,windows,A,ART/手動,Windows Event Log Security 4624 | Windows Event Log Security 4625,T1110.003
+認証情報,T1110.003,Detect Password Spray Attempts,TTP,windows,A,ART/手動,Windows Event Log Security 4625,T1110.003
+認証情報,T1110.003,Windows Multiple Disabled Users Failed To Authenticate Wth Kerberos,TTP,windows,A,ART/手動,Windows Event Log Security 4768,T1110.003
+認証情報,T1110.003,Windows Multiple Invalid Users Fail To Authenticate Using Kerberos,TTP,windows,A,ART/手動,Windows Event Log Security 4768,T1110.003
+認証情報,T1110.003,Windows Multiple Invalid Users Failed To Authenticate Using NTLM,TTP,windows,A,ART/手動,Windows Event Log Security 4776,T1110.003
+認証情報,T1110.003,Windows Multiple Users Fail To Authenticate Wth ExplicitCredentials,TTP,windows,A,ART/手動,Windows Event Log Security 4648,T1110.003
+認証情報,T1110.003,Windows Multiple Users Failed To Authenticate From Host Using NTLM,TTP,windows,A,ART/手動,Windows Event Log Security 4776,T1110.003
+認証情報,T1110.003,Windows Multiple Users Failed To Authenticate From Process,TTP,windows,A,ART/手動,Windows Event Log Security 4625,T1110.003
+認証情報,T1110.003,Windows Multiple Users Failed To Authenticate Using Kerberos,TTP,windows,A,ART/手動,Windows Event Log Security 4771,T1110.003
+認証情報,T1110.003,Windows Multiple Users Remotely Failed To Authenticate From Host,TTP,windows,A,ART/手動,Windows Event Log Security 4625,T1110.003
+認証情報,T1552.001,Windows Unusual FileZilla XML Config Access,Anomaly,windows,A,ART,Windows Event Log Security 4663,T1552.001
+認証情報,T1552.001,Windows Unusual Intelliform Storage Registry Access,Anomaly,windows,A,ART,Windows Event Log Security 4663,T1552.001
+認証情報,T1558.003,Unusual Number of Kerberos Service Tickets Requested,Anomaly,windows,A,ART(DC),Windows Event Log Security 4769,T1558.003
+認証情報,T1558.003,Kerberoasting spn request with RC4 encryption,TTP,windows,A,ART(DC),Windows Event Log Security 4769,T1558.003
+認証情報,T1558.003,ServicePrincipalNames Discovery with PowerShell,TTP,windows,A,ART(DC),Powershell Script Block Logging 4104,T1558.003
+認証情報,T1558.003,ServicePrincipalNames Discovery with SetSPN,TTP,windows,A,ART(DC),Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,T1558.003
+認証情報,T1558.003,Windows PowerView Kerberos Service Ticket Request,TTP,windows,A,ART(DC),Powershell Script Block Logging 4104,T1558.003
+認証情報,T1558.003,Windows PowerView SPN Discovery,TTP,windows,A,ART(DC),Powershell Script Block Logging 4104,T1558.003
+認証情報,"T1558.003,T1558.004",Rubeus Command Line Parameters,TTP,windows,A,ART(DC),Sysmon EventID 1 | Windows Event Log Security 4688 | CrowdStrike ProcessRollup2,"T1550.003,T1558.003,T1558.004"
+認証情報,"T1558.003,T1558.004",Windows Process With NetExec Command Line Parameters,TTP,windows,A,ART(DC),Windows Event Log Security 4688 | Sysmon EventID 1 | CrowdStrike ProcessRollup2,"T1550.003,T1558.003,T1558.004"
+認証情報,T1558.004,Disabled Kerberos Pre-Authentication Discovery With Get-ADUser,TTP,windows,A,ART(DC),Powershell Script Block Logging 4104,T1558.004
+認証情報,T1558.004,Disabled Kerberos Pre-Authentication Discovery With PowerView,TTP,windows,A,ART(DC),Powershell Script Block Logging 4104,T1558.004
+認証情報,T1558.004,Kerberos Pre-Authentication Flag Disabled in UserAccountControl,TTP,windows,A,ART(DC),Windows Event Log Security 4738,T1558.004
+認証情報,T1558.004,Kerberos Pre-Authentication Flag Disabled with PowerShell,TTP,windows,A,ART(DC),Powershell Script Block Logging 4104,T1558.004

@@ -72,6 +72,8 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\ar.ps1 az login --use-devi
    - vCPU：DC 4 ＋ クライアント 4 ＋ Linux 4 ＋ Splunk 4 ＋ Caldera 2 ＝ 18 でリージョン上限 18 ちょうど。引き上げ申請を推奨
    - ユーザー作成：本家に `bad_blood`（DC に大量の AD オブジェクトを作る）がある。手動で作るか BadBlood を使うか要相談
    - ハニーポット：設計から相談（range 内に置くか、別セグメントか、何を検知させたいか）
+   - 2026-11-02 方針：**2 で行く**（いきなり拡張構成）。ユーザー希望の構成は DC ＋ Windows 2 台 ＋ Windows Server ＋ Linux ＋ Palo VM-Series ＋ OpenCanary。Windows 11 は `win11-26h2-pro` が使える（`azure_image_sku` で上書き可能にした `780c15d`）。Av2 枠は 10。**リージョン合計 18 では足りない**（約 32 vCPU 必要）→ クォータ引き上げか VM サイズ縮小を決める
+   - ESCU 選定 v0 を作成：`docs/escu-selection.md`（本命 96 本）、全件仕分け `docs/escu/`、再生成スクリプト `tools/escu/`
 3. その後 6. MCP
 
 ## ユーザー側の宿題（状況確認すること）
