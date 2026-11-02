@@ -63,7 +63,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\ar.ps1 az login --use-devi
 
 ## 次回やりたいこと（2026-11-01 ユーザー談）
 
-1. **destroy の確認**：`python attack_range.py destroy` → range の RG と、core 側のピアリング（`ar-peer-from-aar-ar`）が消え、core 本体（VNet・Splunk・Foundry）は無傷であることを確認。その後に再 build（ART インストールのパッチと `win_sysmon_config: AttackRangeSysmon.xml` が効くかもここで見る）
+1. **destroy の確認**：**2026-11-02 成功（ユーザー報告）**。`python attack_range.py destroy` → range の RG と、core 側のピアリング（`ar-peer-from-aar-ar`）が消え、core 本体（VNet・Splunk・Foundry）は無傷であることを確認。その後に再 build（ART インストールのパッチと `win_sysmon_config: AttackRangeSysmon.xml` が効くかもここで見る）
 2. **構成の拡張**：DC ＋ Windows クライアント ＋ Linux、ドメイン参加、ユーザー作成、ハニーポット
    - DC は `windows_servers` の 1 台目に `create_domain: "1"`、2 台目以降に `join_domain: "1"`
    - Windows 10/11 は本家が `win10-21h2-pro` / `win11-21h2-pro` 固定 → Marketplace から消えている可能性大。要パッチ（`azure_controller.py` のイメージ対応表）
