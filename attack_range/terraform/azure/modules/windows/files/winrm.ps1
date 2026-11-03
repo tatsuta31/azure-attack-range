@@ -11,6 +11,13 @@ powershell.exe -c "winrm set winrm/config/client/auth '@{Basic=\`"true\`"}'"
 powershell.exe -c "winrm set winrm/config/listener?Address=*+Transport=HTTP '@{Port=\`"5985\`"}'"
 powershell.exe -c "winrm set winrm/config/client '@{TrustedHosts=\`"*\`"}'"
 
+# azure-attack-range patch: set the settings Terraform/Ansible need one by one.
+# On Windows 11 the combined "winrm set winrm/config/service" above fails as a whole
+# (a limit value is rejected on client SKUs), leaving AllowUnencrypted=false and
+# making the remote-exec provisioner fail with "401 - invalid content type" (2026-11-03).
+Set-Item -Path WSMan:\localhost\Service\AllowUnencrypted -Value $true -Force
+Set-Item -Path WSMan:\localhost\Service\Auth\Basic -Value $true -Force
+
 # Configure firewall rules
 netsh advfirewall firewall set rule group="Windows Remote Administration" new enable=yes
 netsh advfirewall firewall set rule name="Windows Remote Management (HTTP-In)" new enable=yes action=allow remoteip=any

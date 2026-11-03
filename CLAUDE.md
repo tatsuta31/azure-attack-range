@@ -29,6 +29,9 @@ Azure 上に検知検証ラボを作る。Atomic Red Team / Caldera で攻撃 �
 - Windows の ART インストールで `invoke-atomicredteam` だけ入らず（atomics は入る）、build は成功扱い、初回 simulate で `Invoke-AtomicTest is not recognized`。本家はエンジン側の `IWR` にだけ `-UseBasicParsing` が無い（PS 5.1 は付けないと IE エンジンで解析しようとして失敗し得る）。手動で `-UseBasicParsing` 付きで入れ直したら成功したので、これが原因とみている（元のエラーは未確認）。`31ddd6b` で `-UseBasicParsing`・`$ErrorActionPreference = "Stop"`・存在確認・リトライを追加
 - `attack_range.py stop` が `begin_power_off`（電源オフのみ、割り当てたまま）で、**止めても VM 料金が発生し続ける**。`fc56230` で `begin_deallocate` に変更し、resume も `VM deallocated` から起動できるようにした。ポータルの「停止」は割り当て解除なので OK
 - OpenCanary（0.9.10）の `opencanaryd --dev` は root でないと中で `sudo` を呼ぶ → systemd では `twistd -noy .../opencanary.tac` を直接起動。`--copyconfig` は PATH の `python3` を使うので venv を PATH の先頭に入れないと `No module named 'opencanary'`（使い捨てコンテナで確認済み）
+- Windows 11 では `winrm.ps1` の `winrm set winrm/config/service @{...}` がまとめて失敗し、`AllowUnencrypted=false` のまま残る → Terraform の remote-exec が `401 - invalid content type`。`Set-Item WSMan:\...` で 1 項目ずつ設定するよう修正（2026-11-03）
+- DC では昇格後に `AzureAdmin` を SID に変換できず、Caldera エージェントのタスク登録が失敗する → タスクは SYSTEM で動かす（2026-11-03）
+- Japan East で Av2（A2_v2 / A4_v2）が在庫切れ（`SkuNotAvailable`、2026-11-03）→ Linux は D2_v4、OpenCanary は D2s_v5
 - パブリック IP が SKU 未指定（azurerm 3.6 の既定 = Basic）。Basic は 2025-09 に廃止され、新規作成は `IPv4BasicSkuPublicIpCountLimitReached` で失敗する → 全モジュールに `sku = "Standard"` を足した（Standard は NSG で許可したポートしか通らない「既定で安全」型。range の NSG はサブネットに付いているので動作は変わらない）
 - **本家 Dockerfile は `git clone` で既定ブランチ（v5）を取る**ので v4.0.2 のパッチが乗らない → 自前の `docker/Dockerfile`（ツールのみ、ソースは bind mount）
 - `configure` は SSH 鍵を CWD に作る。Windows の bind mount 上は 0777 に見えて ssh が拒否する → 鍵は名前付きボリューム `aar-ssh`（`/root/.ssh/aar.key`）に置き、configure では既存鍵を再利用
