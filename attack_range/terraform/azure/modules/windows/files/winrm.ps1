@@ -1,3 +1,7 @@
+# azure-attack-range patch: Windows client SKUs refuse WinRM service changes while a
+# network is Public (Azure Windows 11 comes up Public). Make it Private first (2026-11-03).
+Get-NetConnectionProfile | Set-NetConnectionProfile -NetworkCategory Private
+
 Enable-PSRemoting -Force -SkipNetworkProfileCheck
 winrm quickconfig -q
 winrm quickconfig -transport:http
