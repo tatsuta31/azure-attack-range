@@ -360,7 +360,7 @@ opencanary_server:
   splunk_index: "honeypot"
   # Create this index on the BYO Splunk before building.
 
-  azure_vm_size: "Standard_A2_v2"
+  azure_vm_size: "Standard_D2s_v5"   # A2_v2 is out of capacity in japaneast (2026-11-03)
 
 simulation:
   atomic_red_team_repo: redcanaryco
