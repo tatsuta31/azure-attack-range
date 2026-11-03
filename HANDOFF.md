@@ -64,9 +64,10 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\ar.ps1 az login --use-devi
 ## ロードマップ（2026-11-02 ユーザー決定。この順で進める）
 
 1. **環境構築**：DC ＋ Windows 2 台 ＋ Windows Server ＋ Linux ＋ OpenCanary（Palo は置かない）
-   - **コード完成・未 build（2026-11-02）**：`12aa330` サーバーごとの VM サイズ、`d4fe6e2` OpenCanary（DMZ）、`2aaf423` 新しい設定見本。静的チェックと、OpenCanary の使い捨てコンテナでの起動テストは通過
-   - build 前にユーザーがやること：core Splunk に index `honeypot` を作る、`attack_range.yml` を新しい見本に合わせる
-   - build で初めて分かること：Windows 11（Gen2 イメージ）が旧来の `azurerm_virtual_machine` で作れるか、DC 作成とドメイン参加、OpenCanary の実機での起動と UF（UF 9.3 の `splunkfwd` ユーザー）
+   - **完了（2026-11-04）**：7 台 build 済み。core Splunk に全ホストのログが届いた（ar-dc / ar-win1 / ar-win2 / ar-srv → `win`、ar-linux → `unix`・`osquery`、ar-canary → `honeypot`）
+   - build で直したもの：Av2 在庫切れ → D 系（`5ef3a92`）、DC の Caldera タスク → SYSTEM（`f6fafee`）、Windows 11 の WinRM（ネットワークが Public で設定が拒否される → Private 化、`4956f3e` `a1eb210`）、Windows 11 の初回再起動待ち 30 分（`b5ccf69`）。詳細は CLAUDE.md の罠
+   - ar-win2 は再起動直後の WinRM 切断で 1 回失敗 → playbook を直接流し直して成功し、`terraform untaint` で印を消した
+   - Caldera エージェントは SYSTEM で動くので、Caldera 経由の攻撃のユーザーは `NT AUTHORITY\SYSTEM` になる
 2. **ルール有効化**：`docs/escu-selection.md` の本命を有効化し、ART / Caldera / 手動で発火を確認
 3. **Splunk MCP 構築**：Splunk MCP Server app を core Splunk に入れる
 4. **Foundry 構築**：Foundry のリソース・Project・モデル（gpt-4.1-mini）・ロールは core の Terraform で作成済み。ここでやるのはエージェントの作成と MCP との接続（ユーザーはポータルで手で作る練習もしたい可能性あり）
