@@ -1,0 +1,41 @@
+﻿名称,提供元,IP,ドメイン,URL,ハッシュ,その他,取得方法,登録,無料,商用利用,条件・制限,根拠,確認日
+VirusTotal（Public API）,Google,○,○,○,○,,API,要,可能,不可,Public API は非商用・学術用途のみ。商用は Private API（有料）,https://docs.virustotal.com/docs/difference-public-private,2026-11-04
+AlienVault OTX,LevelBlue,○,○,○,○,,API / ファイル,要,可能,不可,非商用の利用者向けに無料。商用での利用・第三者への提供を禁止,https://www.levelblue.com/terms/otx-eula,2026-11-04
+AbuseIPDB（Free プラン）,AbuseIPDB,○,,,,,API,要,可能,不可,Free プランは商用利用不可。商用は Basic 以上の有料プラン,https://www.abuseipdb.com/legal,2026-11-04
+GreyNoise（Community / Free）,GreyNoise,○,,,,,API,要,可能,不可,無料の利用者は非商用目的に限る,https://www.greynoise.io/terms,2026-11-04
+urlscan.io（無料）,urlscan,○,○,○,,スクリーンショット,API,要,可能,不可,個人・非商用のみ。商用は書面の許可または商用契約,https://urlscan.io/terms/,2026-11-04
+Shodan InternetDB,Shodan,○,,,,開いているポート・脆弱性,API,不要,可能,不可,非商用は無料。収益を得る用途はエンタープライズライセンスが必要,https://internetdb.shodan.io/,2026-11-04
+Censys（Free）,Censys,○,○,,,証明書,Web（API は有料のみ）,要,可能,不可,無料の利用者は、社内業務を含む商用目的での利用を禁止,https://censys.com/terms-of-service/,2026-11-04
+Google Safe Browsing API,Google,,○,○,,,API,要,可能,不可,非商用のみ。商用は Web Risk（有料）,https://developers.google.com/safe-browsing/v4/usage-limits,2026-11-04
+OpenPhish（Community Feed）,OpenPhish,,,○,,,ファイル,不要,可能,不可,個人利用のみ。商用は書面の同意が必要,https://openphish.com/terms.html,2026-11-04
+C2IntelFeeds,drb-ra（GitHub）,○,○,○,,C2 サーバー,ファイル（GitHub）,不要,可能,不可,CC BY-NC-SA 4.0（非商用のみ）,https://github.com/drb-ra/C2IntelFeeds,2026-11-04
+URLhaus,abuse.ch / Spamhaus,,○,○,○,,API / ファイル,要（Auth-Key）,可能,条件付き,営利目的の商用利用は Spamhaus の有料契約が必要な場合がある。AI モデルの学習への利用は禁止,https://abuse.ch/terms-of-use/,2026-11-04
+MalwareBazaar,abuse.ch / Spamhaus,,,,○,マルウェア検体,API / ファイル,要（Auth-Key）,可能,条件付き,URLhaus と同じ規約,https://abuse.ch/terms-of-use/,2026-11-04
+ThreatFox,abuse.ch / Spamhaus,○,○,○,○,C2・IOC 全般,API / ファイル,要（Auth-Key）,可能,条件付き,URLhaus と同じ規約,https://abuse.ch/terms-of-use/,2026-11-04
+Feodo Tracker,abuse.ch,○,,,,ボットネットの C2,ファイル,不要,可能,可能,CC0。商用・非商用とも無料。ベストエフォート,https://abuse.ch/terms-of-use/,2026-11-04
+SSL Blacklist（SSLBL）,abuse.ch,○,,,○,悪性の SSL 証明書・JA3,ファイル,不要,可能,可能,CC0。商用・非商用とも無料,https://abuse.ch/terms-of-use/,2026-11-04
+YARAify,abuse.ch,,,,○,YARA ルール,API / ファイル,要（Auth-Key）,可能,可能,CC0。商用・非商用とも無料,https://abuse.ch/terms-of-use/,2026-11-04
+PhishTank,Cisco Talos,,,○,,,API / ファイル,要（API キー）,可能,可能,FAQ で商用・非商用とも OK と明記,https://phishtank.org/faq.php,2026-11-04
+Spamhaus DROP,Spamhaus,○,,,,乗っ取られたネットワーク帯,ファイル,不要,可能,可能,規模・業種を問わず無料。Spamhaus の帰属表示と著作権表記を残す。取得は 1 日 1 回まで,https://www.spamhaus.org/blocklists/do-not-route-or-peer/,2026-11-04
+SANS ISC / DShield,SANS,○,○,,,攻撃の多いポート,API / ファイル,不要,可能,条件付き,自社ネットワークの防御なら商用 OK。データの再販は禁止（ライセンス名は CC BY-NC-SA 4.0 と併記されている）,https://isc.sans.edu/api/,2026-11-04
+Maltrail（trails）,stamparm（GitHub）,○,○,○,,,ファイル（GitHub）,不要,可能,条件付き,社内の防御・研究・教育は無料。商用製品・MSSP / MDR・再配布はライセンスが必要（エンジンは MIT）,https://github.com/stamparm/maltrail,2026-11-04
+MaxMind GeoLite2,MaxMind,○,,,,国・ASN,ファイル / API,要,可能,条件付き,自社の社内業務の範囲で利用可。MaxMind の帰属表示が必要,https://www.maxmind.com/en/geolite2/eula,2026-11-04
+EPSS,FIRST,,,,,脆弱性の悪用確率,API / ファイル,不要,可能,条件付き,無料・登録不要。製品で使うときは帰属表示を求めている（商用の明記はない）,https://www.first.org/epss/faq,2026-11-04
+IPsum,stamparm（GitHub）,○,,,,,ファイル（GitHub）,不要,可能,可能,Unlicense（パブリックドメイン相当）,https://github.com/stamparm/ipsum,2026-11-04
+Phishing.Database,mitchellkrogza（GitHub）,,○,○,,,ファイル（GitHub）,不要,可能,可能,MIT ライセンス。著作権表示を残す,https://github.com/mitchellkrogza/Phishing.Database,2026-11-04
+Tor の出口ノード一覧（Tor Metrics / CollecTor）,Tor Project,○,,,,Tor,ファイル,不要,可能,可能,Tor Metrics のデータは CC0,https://metrics.torproject.org/collector,2026-11-04
+CIRCL hashlookup,CIRCL,,,,○,既知の正規ファイル,API / ファイル,不要,可能,可能,CC-BY。商用・非商用とも利用可。ページへの参照が必要,https://www.circl.lu/services/hashlookup/,2026-11-04
+IPinfo Lite,IPinfo,○,,,,国・ASN,ファイル / API,要,可能,可能,CC BY-SA 4.0。商用 OK。IPinfo の帰属表示が必要,https://ipinfo.io/lite,2026-11-04
+CISA KEV,CISA,,,,,悪用が確認された脆弱性,ファイル（CSV / JSON）,不要,可能,可能,CC0。CISA のロゴは使えない,https://www.cisa.gov/known-exploited-vulnerabilities-catalog,2026-11-04
+MITRE ATT&CK,MITRE,,,,,攻撃手法の体系,ファイル（STIX）,不要,可能,可能,研究・開発・商用目的で無料。MITRE の著作権表示とライセンスを残す,https://attack.mitre.org/resources/legal-and-branding/terms-of-use/,2026-11-04
+CINS Army,Sentinel IPS,○,,,,,ファイル,不要,可能,要確認,「好きなように使ってよい」とあるが、ライセンスの明記はない,https://cinsscore.com/,2026-11-04
+blocklist.de,blocklist.de,○,,,,,ファイル,不要,可能,要確認,ダウンロード先にライセンスの記載なし,https://lists.blocklist.de/lists/,2026-11-04
+FireHOL IP Lists,FireHOL,○,,,,,ファイル（GitHub）,不要,可能,要確認,集約サイト。各リストは元の管理者のもので、条件はリストごとに確認が必要,https://iplists.firehol.org/,2026-11-04
+Emerging Threats Open（IP リスト）,Proofpoint,○,,,,,ファイル,不要,可能,要確認,ダウンロード案内にライセンスの記載なし,https://rules.emergingthreats.net/,2026-11-04
+Phishing Army,Phishing Army,,○,,,,ファイル,不要,可能,要確認,自身は制限を設けていない。ただし元データの条件は提供元ごとに確認が必要,https://phishing.army/license/,2026-11-04
+threatview.io（Community）,Threatview,○,○,○,○,,ファイル,不要,可能,要確認,無料と明記。商用の条件は記載なし,https://threatview.io/,2026-11-04
+Hybrid Analysis,CrowdStrike,,○,○,○,サンドボックス,API,要,可能,要確認,規約を取得できず未確認。無料版の提出物はコミュニティに共有される,https://www.hybrid-analysis.com/terms,2026-11-04
+Pulsedive（Free）,Pulsedive,○,○,○,,,API,要,可能,要確認,規約に無料版の商用利用の明記なし,https://pulsedive.com/terms,2026-11-04
+IBM X-Force Exchange（Free）,IBM,○,○,○,○,,API,要,可能,要確認,規約を取得できず未確認,https://exchange.xforce.ibmcloud.com/,2026-11-04
+CIRCL OSINT Feed（MISP）,CIRCL,○,○,○,○,,ファイル（MISP 形式）,不要,可能,要確認,フィードにライセンスの記載が見つからない,https://www.circl.lu/doc/misp/feed-osint/,2026-11-04
+NIST NSRL,NIST,,,,○,既知の正規ファイル,ファイル,不要,可能,要確認,再配布ポリシーが別ページにあり未確認,https://www.nist.gov/itl/ssd/software-quality-group/national-software-reference-library-nsrl,2026-11-04
