@@ -13,3 +13,4 @@ apps/*.tgz
 apps/*.spl
 *.pub
 *.tfplan
+__pycache__/
