@@ -4,7 +4,9 @@
   ignore_errors: yes
   win_regedit:
     key: "HKLM:\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System\\Audit"
-    value: ProcessCreationinclude_tasksCmdLine_Enabled
+    # azure-attack-range patch: upstream had "ProcessCreationinclude_tasksCmdLine_Enabled"
+    # (a find-and-replace of Include -> include_tasks), so 4688 never had command lines
+    value: ProcessCreationIncludeCmdLine_Enabled
     datatype: dword
     data: 1
 
