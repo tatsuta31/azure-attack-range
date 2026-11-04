@@ -35,6 +35,10 @@
 | AUDITD | Linux の auditd 系 3 本 | マクロ `linux_auditd` を `sourcetype="auditd"` から `sourcetype="linux:audit"` に変える（ラボの auditd は `linux:audit` で送っている）。`proctitle` が 16 進のまま取り込まれる場合は、フィールド抽出も確認する |
 | PALO | ネットワークの 15 本 | Palo Alto のログ（CIM 対応の TA）が前提。ラボでは発火しない |
 
+**Sysmon を従来の形式（UF の `renderXml = 0`、source が `WinEventLog:Microsoft-Windows-Sysmon/Operational`）で取り込んでいる環境では、CIM の index 設定だけでは足りない。** Splunk Add-on for Sysmon（5.x）のイベントタイプ・タグ・CIM フィールドの変換は XML 形式専用なので、従来の形式のイベントはデータモデルに入らない。UF で `renderXml = 1` にするか、`tools/splunk/make_sysmon_classic_app.py` で従来の形式用の変換アプリを作って検索側に入れる。
+
+`tstats` 系のルールが見るのは CIM のマクロ（`cim_Endpoint_indexes` など）で、ESCU 側のマクロ（`sysmon` など）に index を書いても `tstats` 系には効かない。両方に設定する。
+
 ほかに、しきい値がラボの規模に合わないルールがある（30 ユーザー、30 台など）。メモ列に書いた。
 
 ## ART のテスト番号について
