@@ -1,0 +1,16 @@
+id: 7f2a1b00-0000-4a00-9b00-0a1b2c3d0000
+name: AAR KillChain-01 (5-detection TP validation)
+description: >
+  One-operation kill chain for the Azure Attack Range detection lab. Run against a group that
+  contains ar-win1 (client) and ar-dc (domain controller). Every ability self-guards by host
+  role, so within a single operation the client executes #4 -> #3 -> #5 and the DC executes
+  #1 -> #6, while skipping the abilities meant for the other host. This yields one correlated
+  incident whose malicious processes are all parented by the sandcat implant (C:\Temp\splunkd.exe).
+  Non-destructive and reversible; each ability ships a cleanup. Glue steps from story-02
+  (LSASS dump, vssadmin delete shadows, WMI lateral movement) are intentionally excluded.
+atomic_ordering:
+  - 7f2a1b04-0000-4a04-9b04-0a1b2c3d0004  # #4 Persistence - scheduled task (client)
+  - 7f2a1b01-0000-4a01-9b01-0a1b2c3d0001  # #1 Defense Evasion - audit disable (DC)
+  - 7f2a1b06-0000-4a06-9b06-0a1b2c3d0006  # #6 Persistence - AdminSDHolder ACL (DC)
+  - 7f2a1b03-0000-4a03-9b03-0a1b2c3d0003  # #3 Collection - archive via PowerShell (client)
+  - 7f2a1b05-0000-4a05-9b05-0a1b2c3d0005  # #5 Impact - bulk ransom notes (client)

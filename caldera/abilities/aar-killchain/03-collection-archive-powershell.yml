@@ -1,0 +1,23 @@
+- id: 7f2a1b03-0000-4a03-9b03-0a1b2c3d0003
+  name: "[AAR #3] Collection - Archive staged data via PowerShell"
+  description: >
+    Detection-validation ability for the Azure Attack Range lab. Stages dummy "confidential"
+    files and compresses them into C:\Windows\Temp with Compress-Archive, to produce
+    true-positive telemetry for ESCU "Windows Archive Collected Data via Powershell"
+    (T1560.001, PowerShell 4104). The detection requires BOTH Compress-Archive AND a \Temp\
+    destination in the script block. Runs on client hosts only. Non-destructive and reversible.
+  tactic: collection
+  technique:
+    attack_id: T1560.001
+    name: "Archive Collected Data: Archive via Utility"
+  platforms:
+    windows:
+      psh:
+        command: |
+          if ((Get-CimInstance Win32_ComputerSystem).DomainRole -ge 4) { "skip: domain controller"; exit 0 }
+          $stage = "C:\Users\Public\stage"
+          New-Item -ItemType Directory -Force -Path $stage | Out-Null
+          1..10 | ForEach-Object { "confidential record $_" | Out-File "$stage\rec$_.txt" }
+          Compress-Archive -Path "$stage\*" -DestinationPath "C:\Windows\Temp\exfil.zip" -Force
+        cleanup: |
+          Remove-Item "C:\Windows\Temp\exfil.zip","C:\Users\Public\stage" -Recurse -Force -ErrorAction SilentlyContinue

