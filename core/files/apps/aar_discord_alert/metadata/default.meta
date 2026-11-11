@@ -1,0 +1,4 @@
+# ESCU（DA-ESS-ContentUpdate）のルールからも使えるよう、全アプリに公開する
+[]
+access = read : [ * ], write : [ admin ]
+export = system
