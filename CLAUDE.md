@@ -26,8 +26,8 @@ Azure 上に検知検証ラボを作る。Atomic Red Team / Caldera で攻撃 �
 - Caldera の Ansible ロールは `/home/admin/caldera` 固定。**Azure は管理者ユーザー名 `admin` を禁止**しているのでパス修正が必要
 - Azure では Kali モジュールがコメントアウト（Marketplace から消えた）
 - 既定の Splunk は 9.3.0。BYO にするので range 側では使わない
-- Windows の ART インストールで `invoke-atomicredteam` だけ入らず（atomics は入る）、build は成功扱い、初回 simulate で `Invoke-AtomicTest is not recognized`。本家はエンジン側の `IWR` にだけ `-UseBasicParsing` が無い（PS 5.1 は付けないと IE エンジンで解析しようとして失敗し得る）。手動で `-UseBasicParsing` 付きで入れ直したら成功したので、これが原因とみている（元のエラーは未確認）。`31ddd6b` で `-UseBasicParsing`・`$ErrorActionPreference = "Stop"`・存在確認・リトライを追加
-- `attack_range.py stop` が `begin_power_off`（電源オフのみ、割り当てたまま）で、**止めても VM 料金が発生し続ける**。`fc56230` で `begin_deallocate` に変更し、resume も `VM deallocated` から起動できるようにした。ポータルの「停止」は割り当て解除なので OK
+- Windows の ART インストールで `invoke-atomicredteam` だけ入らず（atomics は入る）、build は成功扱い、初回 simulate で `Invoke-AtomicTest is not recognized`。本家はエンジン側の `IWR` にだけ `-UseBasicParsing` が無い（PS 5.1 は付けないと IE エンジンで解析しようとして失敗し得る）。手動で `-UseBasicParsing` 付きで入れ直したら成功したので、これが原因とみている（元のエラーは未確認）。`eab266d` で `-UseBasicParsing`・`$ErrorActionPreference = "Stop"`・存在確認・リトライを追加
+- `attack_range.py stop` が `begin_power_off`（電源オフのみ、割り当てたまま）で、**止めても VM 料金が発生し続ける**。`119f11e` で `begin_deallocate` に変更し、resume も `VM deallocated` から起動できるようにした。ポータルの「停止」は割り当て解除なので OK
 - OpenCanary（0.9.10）の `opencanaryd --dev` は root でないと中で `sudo` を呼ぶ → systemd では `twistd -noy .../opencanary.tac` を直接起動。`--copyconfig` は PATH の `python3` を使うので venv を PATH の先頭に入れないと `No module named 'opencanary'`（使い捨てコンテナで確認済み）
 - Azure の Windows 11 はネットワークが **Public** で起動し、クライアント版 Windows は Public のあいだ WinRM サービスの設定変更を拒否する（`WinRM firewall exception will not work since one of the network connection types on this machine is set to Public`）。`AllowUnencrypted=false` のまま残り、Terraform の remote-exec が `401 - invalid content type` で落ちる → `winrm.ps1` の先頭で `Set-NetConnectionProfile -NetworkCategory Private`（実機で確認、2026-11-03）。ポータルの「接続 → Bastion」を押すと range VNet に Bastion が自動で作られ、destroy が `InUseVirtualNetworkCannotBeDeleted` で失敗する。RDP は直接つなぐ
 - 4688 にコマンドラインを入れるレジストリの値名が、本家では `ProcessCreationinclude_tasksCmdLine_Enabled`（`Include` → `include_tasks` の一括置換の巻き添え）。`ignore_errors: yes` なので失敗も出ず、4688 にコマンドラインが入らない → 正しい名前に修正（実機で確認、2026-11-04）。Sysmon の EventCode 1 はこの設定と無関係に CommandLine を記録する
@@ -46,6 +46,10 @@ Azure 上に検知検証ラボを作る。Atomic Red Team / Caldera で攻撃 �
 ## パッチ方針
 
 初回コミットは本家そのまま（pristine）。以降のパッチは diff で追えるよう、パッチ単位でコミットする。
+
+- **注意（2026-11-12 確認）**：履歴が書き換えられており、本家そのままのコミットは残っていない。ルートコミット `6831dfe` には本家 v4.0.2 と初期パッチ（Caldera ロールのパス修正、Azure 変数への `caldera_server` 追加、ピアリングなど）が混ざっている。本家との差分は本家 v4.0.2 タグと比較して見る
+- 書き換え前のコミット番号（`31ddd6b` など）は存在しない。文書でコミットを指すときは番号とタイトルを併記する
+- パスワード・パブリック IP・テナント ID などは文書に直書きしない（`<caldera-public-ip>` のように書く。値は gitignore 対象の `attack_range.yml` / `.env` / tfvars にだけ置く）
 
 ## 未解決・要検証
 
