@@ -45,4 +45,13 @@ state はこのディレクトリのローカル（`terraform.tfstate`、git 管
 - **Splunk を作り直す**：`custom_data` の変更は無視する設定なので、明示的に `terraform apply -replace=azurerm_linux_virtual_machine.splunk`（ロック OFF が前提。インデックス済みデータは消える）
 - **自動停止後の起動**：ポータルで VM を開始するか、`az vm start -g aar-core -n aar-core-splunk`
 - **ライセンス**：Developer License が届いたら Splunk Web の「設定 → ライセンス」から追加。Free に落ちると認証が消え、MCP のトークン認証も使えなくなる
+- **Discord 通知（`files/apps/aar_discord_alert`）**：自作のアラートアクション。cloud-init には入れていないので手で置く（下）。Webhook URL はサーバー上の `local/alert_actions.conf` にだけ書く（git に入れない）。送信ログは `index=_internal sendmodalert action_name=discord`
+  ```bash
+  # ツールボックス内
+  scp -i /root/.ssh/aar.key -r /work/core/files/apps/aar_discord_alert azureuser@<Splunk の IP>:/tmp/
+  # Splunk VM 内
+  sudo cp -r /tmp/aar_discord_alert /opt/splunk/etc/apps/ && sudo mkdir -p /opt/splunk/etc/apps/aar_discord_alert/local
+  sudo nano /opt/splunk/etc/apps/aar_discord_alert/local/alert_actions.conf   # [discord] と param.webhook_url = <URL>
+  sudo chown -R splunk:splunk /opt/splunk/etc/apps/aar_discord_alert && sudo systemctl restart Splunkd
+  ```
 - **admin パスワードの扱い**：cloud-init（custom_data）に平文で入るため、state と VM 内の IMDS から読める。個人ラボとして許容している

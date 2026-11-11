@@ -185,11 +185,19 @@ Remove-Item "C:\Users\AzureAdmin\Desktop\victim" -Recurse -Force -ErrorAction Si
 auditpol /set /subcategory:"Directory Service Changes" /success:enable /failure:enable
 
 # 2. AdminSDHolder オブジェクトに「書き込み系の監査(SACL)」を付ける
-#    （SACL が無いと、変更しても 5136 は記録されない）
-$dn = "CN=AdminSDHolder,CN=System," + ([ADSI]"LDAP://RootDSE").defaultNamingContext
-dsacls "$dn" /S /I:T
-# 監査エントリの付与は AD の「セキュリティ → 詳細設定 → 監査」タブから Everyone / すべての書き込み を追加するのが確実。
-# スクリプトで付けるなら Set-Acl + ActiveDirectoryAuditRule を使う（実施時に別途詰める）。
+#    （SACL が無いと、変更しても 5136 は記録されない。ACE 追加＝DACL 書き換えなので WriteDacl が必須）
+#    ※ dsacls /S は「権限を既定値に戻す」オプションで SACL 付与ではない。使わないこと（2026-11-12 実機で失敗して判明）
+Import-Module ActiveDirectory
+$dn = "AD:CN=AdminSDHolder,CN=System," + (Get-ADDomain).DistinguishedName
+$acl  = Get-Acl -Path $dn -Audit
+$everyone = New-Object System.Security.Principal.SecurityIdentifier("S-1-1-0")
+$rule = New-Object System.DirectoryServices.ActiveDirectoryAuditRule($everyone, "WriteDacl, WriteProperty", "Success")
+$acl.AddAuditRule($rule)
+Set-Acl -Path $dn -AclObject $acl
+(Get-Acl -Path $dn -Audit).Audit | Format-Table IdentityReference, ActiveDirectoryRights, AuditFlags   # 確認
+
+# 3. 攻撃に使う低権限ユーザーが無ければ作る
+New-ADUser -Name labuser1 -AccountPassword (ConvertTo-SecureString 'AarLab-tatsuta' -AsPlainText -Force) -Enabled $true
 ```
 
 > この SACL 付与は実環境では attack ではなく**防御側の監査設定**。手順が固まったら `advanced_logging.yml` に取り込む案も検討（恒久化）。
@@ -309,11 +317,11 @@ index=* sourcetype=pan:threat
 
 | # | ルール | 実施日時 | 生ログ(EventCode)有無 | 発火 | 発火までの遅延 | メモ |
 |---|---|---|---|---|---|---|
-| 1 | AD DC Audit Policy Disabled | | 4719: | | | dest_category 改変版で実施 |
-| 3 | Archive via Powershell | | 4104: | | | |
-| 4 | Scheduled Task Suspicious Command | | 4698: | | | |
-| 5 | Ransomware Notes bulk creation | | Sysmon11: | | | 同名×20フォルダ |
-| 6 | AD AdminSDHolder ACL Modified | | 5136: | | | SACL事前設定が要る |
+| 1 | AD DC Audit Policy Disabled | 2026-11-12 00:35 JST | 4719: あり（ar-dc、`%%8448, %%8450`＝Success/Failure removed） | 発火（アラート設定済み・待ち） | — | `dest_category` を `host=ar-dc` に改変済み。戻しの 00:40/01:28 は `%%8449,%%8451`（added）でルール非該当＝正しい挙動 |
+| 3 | Archive via Powershell | 2026-11-12 00:55 JST | 4104: あり（ar-win1、`Compress-Archive ... C:\Windows\Temp\exfil.zip`） | 生ログ確認済み | — | Compress-Archive ＋ `\Temp\` の両条件を満たす |
+| 4 | Scheduled Task Suspicious Command | 2026-11-11 23:22 JST | 4698: あり（ar-win1、Caller=AzureAdmin） | 発火（手動実行） | —（ルールは無効のまま、ESCU アプリ上で SPL を手動実行） | 同時に誤検知 5 件：OneDrive Startup Task（`C:\Users\...`）、Defender の MpCmdRun 系（`C:\ProgramData\...`）、いずれも 4702。「suspicious paths」に当たる正規タスク。本番なら `windows_scheduled_task_with_suspicious_command_filter` で除外 |
+| 5 | Ransomware Notes bulk creation | 2026-11-12 00:45 JST | Sysmon11: あり（ar-win1、`paths=20`、全て `RESTORE_FILES.txt`） | 生ログ確認済み | — | 同名×20フォルダ。しきい値 `dc>=15` を満たす |
+| 6 | AD AdminSDHolder ACL Modified | 2026-11-12 01:29 JST | 5136: あり（ar-dc、`ObjectDN=CN=AdminSDHolder`、`nTSecurityDescriptor`、`%%14674`/`%%14675`） | 生ログ確認済み | — | 事前設定は `Set-Acl`＋`ActiveDirectoryAuditRule`（WriteDacl,WriteProperty/Success）でやり直し。`dsacls /S` は誤り。SubjectUserName=AzureAdmin（＝攻撃者）が正しい |
 | 2 | Palo code injection | | threat/traffic: | | | DataModel 経由（Network_Traffic / Intrusion_Detection） |
 
 ---
