@@ -1,0 +1,22 @@
+- id: 7f2a1b01-0000-4a01-9b01-0a1b2c3d0001
+  name: "[AAR #1] Defense Evasion - Disable DC audit subcategory"
+  description: >
+    Detection-validation ability for the Azure Attack Range lab. On the domain controller,
+    disables auditing for the "Credential Validation" subcategory, to produce true-positive
+    telemetry for ESCU "Windows AD Domain Controller Audit Policy Disabled" (T1685 / T1562.002,
+    Security 4719, AuditPolicyChanges = Success/Failure removed). DELIBERATELY leaves
+    "Directory Service Changes" enabled so that the next ability (#6, 5136) is still captured -
+    this models an incomplete defense evasion and is the report's key detection opportunity.
+    Runs on the domain controller only (self-skips on clients). Fully reversible via cleanup.
+  tactic: defense-evasion
+  technique:
+    attack_id: T1562.002
+    name: "Impair Defenses: Disable Windows Event Logging"
+  platforms:
+    windows:
+      psh:
+        command: |
+          if ((Get-CimInstance Win32_ComputerSystem).DomainRole -lt 4) { "skip: not a domain controller"; exit 0 }
+          auditpol /set /subcategory:"Credential Validation" /success:disable /failure:disable
+        cleanup: |
+          auditpol /set /subcategory:"Credential Validation" /success:enable /failure:enable

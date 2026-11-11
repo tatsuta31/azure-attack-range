@@ -1,0 +1,27 @@
+- id: 7f2a1b05-0000-4a05-9b05-0a1b2c3d0005
+  name: "[AAR #5] Impact - Bulk ransom-note drop (no encryption)"
+  description: >
+    Detection-validation ability for the Azure Attack Range lab. Writes the SAME ransom-note
+    filename (empty text, LAB marker) into 20 different folders, to produce true-positive
+    telemetry for ESCU "Ransomware Notes bulk creation" (T1486, Sysmon EventCode 11). The
+    detection counts dc(TargetFilename) >= 15 for one file_name. NO encryption, NO shadow-copy
+    deletion, NO real impact - only the note-spraying file-write pattern. Runs on client hosts
+    only. Fully reversible via cleanup.
+  tactic: impact
+  technique:
+    attack_id: T1486
+    name: "Data Encrypted for Impact"
+  platforms:
+    windows:
+      psh:
+        command: |
+          if ((Get-CimInstance Win32_ComputerSystem).DomainRole -ge 4) { "skip: domain controller"; exit 0 }
+          $note = "RESTORE_FILES.txt"
+          $body = "Your files were encrypted. (LAB TEST - no real impact)"
+          1..20 | ForEach-Object {
+            $dir = "C:\Users\Public\victim\dir$_"
+            New-Item -ItemType Directory -Force -Path $dir | Out-Null
+            $body | Out-File -FilePath (Join-Path $dir $note) -Encoding ascii
+          }
+        cleanup: |
+          Remove-Item "C:\Users\Public\victim" -Recurse -Force -ErrorAction SilentlyContinue

