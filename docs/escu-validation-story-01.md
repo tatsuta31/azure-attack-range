@@ -197,7 +197,7 @@ Set-Acl -Path $dn -AclObject $acl
 (Get-Acl -Path $dn -Audit).Audit | Format-Table IdentityReference, ActiveDirectoryRights, AuditFlags   # 確認
 
 # 3. 攻撃に使う低権限ユーザーが無ければ作る
-New-ADUser -Name labuser1 -AccountPassword (ConvertTo-SecureString 'AarLab-tatsuta' -AsPlainText -Force) -Enabled $true
+New-ADUser -Name labuser1 -AccountPassword (Read-Host -AsSecureString 'labuser1 password') -Enabled $true
 ```
 
 > この SACL 付与は実環境では attack ではなく**防御側の監査設定**。手順が固まったら `advanced_logging.yml` に取り込む案も検討（恒久化）。

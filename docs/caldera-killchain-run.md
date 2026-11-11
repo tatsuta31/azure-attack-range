@@ -71,7 +71,7 @@ sudo systemctl restart caldera
 
 ## ステップ2：オペレーションを1本実行
 
-Caldera Web（`https://20.48.49.42:8888`、パスワードは `AarLab-tatsuta`）で：
+Caldera Web（`https://<caldera-public-ip>:8888`、パスワードは `attack_range.yml` の `attack_range_password`）で：
 
 1. **agents** で ar-win1 と ar-dc の sandcat を同じ group（例 `red`）に入れる。
 2. **operations → +** で新規作成：
